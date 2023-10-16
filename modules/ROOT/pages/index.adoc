@@ -1,0 +1,6 @@
+= Creating Machine Learning Models with Red Hat OpenShift Data Science
+:navtitle: Home
+
+== Introduction
+
+This is an example quick course demonstrating the usage of Antora for authoring and publishing quick courses.
