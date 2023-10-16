@@ -1,5 +1,5 @@
-name: rhods-model
-title: Creating Machine Learning Models with Red Hat OpenShift Data Science
+name: rhods-deploy
+title: Deploying Machine Learning Models with Red Hat OpenShift Data Science
 version: 1.33
 nav:
 - modules/ROOT/nav.adoc

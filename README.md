@@ -1,6 +1,6 @@
-# Creating Machine Learning Models with Red Hat OpenShift Data Science
+# Deploying Machine Learning Models with Red Hat OpenShift Data Science
 
-This course is the third in a series of 6 courses about Red Hat OpenShift Data Science (RHODS). This course teaches you how to create machine learning models in RHODS, and how to export models using Jupyter Notebooks.
+This course is the fourth in a series of 6 courses about Red Hat OpenShift Data Science (RHODS). This course teaches you how to deploy machine learning models in RHODS, and how to consume them from client applications.
 
 # Creating Course Content
 
@@ -35,7 +35,7 @@ To add a new section under a chapter create an entry in the *modules/CHAPTER/nav
 
 1. Clone the course repository.
 ```
-    $ git clone git@github.com:RedHatQuickCourses/rhods-model.git
+    $ git clone git@github.com:RedHatQuickCourses/rhods-deploy.git
 ```
 
 2. Install the npm dependencies for the course tooling.
@@ -75,7 +75,7 @@ To add a new section under a chapter create an entry in the *modules/CHAPTER/nav
 
 11. Wait for a few minutes while the automated GitHub action publishes your changes ot the production GitHub pages website.
 
-12. Verify that your changes have been published to the production GitHub pages website at https://redhatquickcourses.github.io/rhods-model
+12. Verify that your changes have been published to the production GitHub pages website at https://redhatquickcourses.github.io/rhods-deploy
 
 # Problems and Feedback
-If you run into any issues, report bugs/suggestions/improvements about this course here - https://github.com/RedHatQuickCourses/rhods-model/issues
+If you run into any issues, report bugs/suggestions/improvements about this course here - https://github.com/RedHatQuickCourses/rhods-deploy/issues

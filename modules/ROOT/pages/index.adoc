@@ -1,4 +1,4 @@
-= Creating Machine Learning Models with Red Hat OpenShift Data Science
+= Deploying Machine Learning Models with Red Hat OpenShift Data Science
 :navtitle: Home
 
 == Introduction
