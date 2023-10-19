@@ -40,7 +40,7 @@ To add a new section under a chapter create an entry in the *modules/CHAPTER/nav
 
 2. Install the npm dependencies for the course tooling.
 ```
-    $ cd rhods-model
+    $ cd rhods-deploy
     $ npm install
 ```
 
