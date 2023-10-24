@@ -3,4 +3,10 @@
 
 == Introduction
 
-This is an example quick course demonstrating the usage of Antora for authoring and publishing quick courses.
+Generally speaking, an organization decides to train a model, because the organization wishes to empower the applications portfolio with inferences made by such model. In this way, the given known data points of a given event, can produce an inference, guess, or prediction of a topic of interest.
+
+In this course, we will explore how we can leverage Red Hat Data Science tools to answer the question in the following picture:
+
+image::why_deploy.drawio.svg[]
+
+How do we deliver a model to an inference engine, or server, so that, when the server receives a request from any of the applications in the oragnization's portfolio, the inference engine can reply with a prediction made based in the model that we have previously worked hard to train.
