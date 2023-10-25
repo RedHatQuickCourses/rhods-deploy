@@ -9,3 +9,59 @@ For example, in natural language processing, machine learning models can parse a
 The process of creating a model include steps for data collection and selection, the selection of an algorithm to process the data, training the model with such algorithm by tuning its hyperparameters, and once it is measured to produce the required results, exporting the model so that it can be deployed.
 
 image::ml_workflow.drawio.svg[Machine Learning Workflow]
+
+== Train a model
+
+Using a RHODS instance, let us train and deploy an example.
+
+. Open a workbench in RHODS, here you have the option to use the **JupyterLab application**, or to create a **Data Science Project** + **Workbench**
++
+image::workbench_options.png[Workbench Options]
+
+. Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a console and install:
++
+```shell
+  pip install numpy matplotlib scikit-learn
+```
++
+image::terminal-install.png[Install packages]
+
+. In the **JupyterLab**, create a new notebook, and name it **purchase-amount**
++
+image::purchase-amount-notebook.png[purchase-amount notebook]
+
+. Use the following code to train and export a model that predicts the amount of a pruchase given the number of minutes to make such purchase in a website.
++
+```python
+  # Include required packages for execution
+  import numpy
+  import matplotlib.pyplot as plt
+  from sklearn.metrics import r2_score
+  import pickle
+
+  # Create data
+  numpy.random.seed(2)
+  # Create a random set of numbers for a mock representation of minutes spent online
+  x = numpy.random.normal(3,1,100)
+  # Create a random set of number for a mock representation of the purchase amount
+  y = numpy.random.normal(150,40,100) / x
+
+  # Divide the data between tranin and test
+  # where the training set is the 80% of the data
+  # while the test set is the remaining 20%
+  train_x = x[:80]
+  train_y = y[:80]
+
+  test_x = x[80:]
+  test_y = y[80:]
+
+  # train a model using polynomial regression
+  mymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))
+  # export the model to a file
+  filename = 'mymodel.pkl'
+  pickle.dump(mymodel, open(filename, 'wb'))
+```
+
+. Notice the creation of a new file in your environment, the `mymodel.pkl`
++
+image::mymodel-pkl.png[Model file export]
