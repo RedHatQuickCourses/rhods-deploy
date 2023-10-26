@@ -14,7 +14,8 @@ image::ml_workflow.drawio.svg[Machine Learning Workflow]
 
 Using a RHODS instance, let us train and deploy an example.
 
-. Open a workbench in RHODS, here you have the option to use the **JupyterLab application**, or to create a **Data Science Project** + **Workbench**
+. In a data science project, create a `Standard Data Science`workbench.
+Then, open the workbench to go to the JuypterLab interface.
 +
 image::workbench_options.png[Workbench Options]
 
