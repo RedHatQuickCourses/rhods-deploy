@@ -123,6 +123,11 @@ For this section, you will need postman (or docker) to create an image, and a re
 
 The pickle model that we previously exported can be used in a Flask application. In this section we present an example Flask application that uses the model.
 
+. In your computer, create a new directory to save the source code of the web application.
+Navigate to that directory.
+
+. Download the `mymodel.pkl` file from JupyterLab into this directory.
+
 . In a python IDE, create a python script named `app.py` with the following code:
 +
 ```python[app.py]
