@@ -19,7 +19,7 @@ Then, open the workbench to go to the JuypterLab interface.
 +
 image::workbench_options.png[Workbench Options]
 
-. Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a console and install:
+. Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:
 +
 ```shell
   pip install numpy matplotlib scikit-learn
