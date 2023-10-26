@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Section 1 :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <link rel="prev" href="index.html">
+    <link rel="next" href="section2.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/rhods-deploy/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="rhods-deploy" data-version="1.33">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Model Serving in RHODS</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section1.html">Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Section 2</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Section 3</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift Data Science</span>
+    <span class="version">1.33</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.33</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
+    <li><a href="index.html">Model Serving in RHODS</a></li>
+    <li><a href="section1.html">Section 1</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Section 1</h1>
+<div class="sect1">
+<h2 id="_the_model"><a class="anchor" href="#_the_model"></a>The model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A machine learning model is a program that can learn and make predictions or decisions based on data. It&#8217;s a fundamental component of machine learning, a subset of artificial intelligence. Machine learning models are designed to automatically improve their performance on a task through experience (i.e., training data) without being explicitly programmed for that task.</p>
+</div>
+<div class="paragraph">
+<p>For example, in natural language processing, machine learning models can parse and correctly recognize the intent behind previously unheard sentences or combinations of words. In image recognition, a machine learning model can be taught to recognize objects - such as cars or dogs. A machine learning model can perform such tasks by having it <em>'trained'</em> with a large dataset. During training, the machine learning algorithm is optimized to find certain patterns or outputs from the dataset, depending on the task. The output of this process - often a computer program with specific rules and data structures - is called a machine learning model.</p>
+</div>
+<div class="paragraph">
+<p>The process of creating a model include steps for data collection and selection, the selection of an algorithm to process the data, training the model with such algorithm by tuning its hyperparameters, and once it is measured to produce the required results, exporting the model so that it can be deployed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ml_workflow.drawio.svg" alt="Machine Learning Workflow">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using a RHODS instance, let us train and deploy an example.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open a workbench in RHODS, here you have the option to use the <strong>JupyterLab application</strong>, or to create a <strong>Data Science Project</strong> + <strong>Workbench</strong></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/workbench_options.png" alt="Workbench Options">
+</div>
+</div>
+</li>
+<li>
+<p>Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a console and install:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">  pip install numpy matplotlib scikit-learn</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/terminal-install.png" alt="Install packages">
+</div>
+</div>
+</li>
+<li>
+<p>In the <strong>JupyterLab</strong>, create a new notebook, and name it <strong>purchase-amount</strong></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/purchase-amount-notebook.png" alt="purchase-amount notebook">
+</div>
+</div>
+</li>
+<li>
+<p>Use the following code to train and export a model that predicts the amount of a pruchase given the number of minutes to make such purchase in a website.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Include required packages for execution
+import numpy
+import matplotlib.pyplot as plt
+from sklearn.metrics import r2_score
+import pickle
+
+# Create data
+numpy.random.seed(2)
+# Create a random set of numbers for a mock representation of minutes spent online
+x = numpy.random.normal(3,1,100)
+# Create a random set of number for a mock representation of the purchase amount
+y = numpy.random.normal(150,40,100) / x
+
+# Divide the data between tranin and test
+# where the training set is the 80% of the data
+# while the test set is the remaining 20%
+train_x = x[:80]
+train_y = y[:80]
+
+test_x = x[80:]
+test_y = y[80:]
+
+# train a model using polynomial regression
+mymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))
+# export the model to a file
+filename = 'mymodel.pkl'
+pickle.dump(mymodel, open(filename, 'wb'))</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Notice the creation of a new file in your environment, the <code>mymodel.pkl</code></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mymodel-pkl.png" alt="Model file export">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There are different formats and libraries to export the model, in this case we are using pickle. Other common formats are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Protobuf</p>
+</li>
+<li>
+<p>MLeap</p>
+</li>
+<li>
+<p>H5</p>
+</li>
+<li>
+<p>ONNX</p>
+</li>
+<li>
+<p>PMML</p>
+</li>
+<li>
+<p>Torch</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The use of either of those formats depend on the target server runtime, some of them are proven to be more eficient than others for certain type of training algorithms and model sizes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_use_the_model_in_another_notebook"><a class="anchor" href="#_use_the_model_in_another_notebook"></a>Use the model in another notebook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The model can be deserialized in another notebook, and used to generate a prediction:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a notebook called <strong>use-purchase-amount</strong></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/use-purchase-amount-notebook.png" alt="use-purchase-amount notebook create">
+</div>
+</div>
+</li>
+<li>
+<p>Use the following code to instantiate the model and request for a prediction</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># Include required packages for execution
+import pickle
+
+# Load models
+with open('mymodel.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+# perform a prediction using the model
+print(model(4))</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/prediction-with-model.png" alt="prediction with model">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>At this moment the model can be exported and imported in other projects for its use. Normally there will be an S3 bucket or a model registry to store models and versions of such models, and instead of manually exporting the model, there would be pipelines making the model available.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_model_in_a_container"><a class="anchor" href="#_the_model_in_a_container"></a>The model in a container</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For this section, you will need postman (or docker) to create an image, and a registry to upload the resulting image.</p>
+</div>
+<div class="sect2">
+<h3 id="_web_application_that_uses_the_model"><a class="anchor" href="#_web_application_that_uses_the_model"></a>web application that uses the model</h3>
+<div class="paragraph">
+<p>The pickle model that we previously exported can be used in a Flask application. In this section we present an example Flask application that uses the model.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In a python IDE, create a python script named <code>app.py</code> with the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python[app.py] hljs" data-lang="python[app.py]">from flask import Flask, request
+import pickle
+
+app = Flask(__name__)
+# Load model
+with open('mymodel.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+model_name = "Time to purchase amount predictor"
+model_file = 'model.plk'
+version = "v1.0.0"
+
+
+@app.route('/info', methods=['GET'])
+def info():
+    """Return model information, version how to call"""
+    result = {}
+
+    result["name"] = model_name
+    result["version"] = version
+
+    return result
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    """REturn service health"""
+    return 'ok'
+
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    feature_dict = request.get_json()
+    if not feature_dict:
+        return {
+            'error': 'Body is empty.'
+        }, 500
+
+    try:
+        return {
+            'status': 200,
+            'prediction': int(model(feature_dict['time']))
+        }
+    except ValueError as e:
+        return {'error': str(e).split('\n')[-1].strip()}, 500
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>create a <code>requirements.txt</code> to describe the python dependencies to install on container startup:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-[requirements.txt] hljs" data-lang="[requirements.txt]">click==8.0.3
+cycler==0.11.0
+Flask==2.0.2
+fonttools==4.28.5
+gunicorn==20.1.0
+itsdangerous==2.0.1
+Jinja2==3.0.3
+kiwisolver==1.3.2
+MarkupSafe==2.0.1
+matplotlib==3.5.1
+numpy==1.22.0
+packaging==21.3
+pandas==1.3.5
+Pillow==9.0.0
+pyparsing==3.0.6
+python-dateutil==2.8.2
+pytz==2021.3
+scikit-learn==1.0.2
+scipy==1.7.3
+six==1.16.0
+sklearn==0.0
+threadpoolctl==3.0.0
+Werkzeug==2.0.2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>containerfile</code> to build an image with the Flask application:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-docker[containerfile] hljs" data-lang="docker[containerfile]"># Base image
+FROM python:3.9
+
+# Set working directory
+WORKDIR /app
+
+# Copy files
+COPY app.py /app <i class="conum" data-value="1"></i><b>(1)</b>
+COPY requirements.txt /app <i class="conum" data-value="2"></i><b>(2)</b>
+COPY mymodel.pkl /app <i class="conum" data-value="3"></i><b>(3)</b>
+
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Run the application
+EXPOSE 8000
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "--access-logfile", "-", "--error-logfile", "-", "--timeout", "120"]
+CMD ["app:app"]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The python application source code</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The list of packages to install</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The model</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Build and push the image to an image registry</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">podman login quay.io
+podman build -t purchase-predictor:1.0 .
+podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
+podman push quay.io/user_name/purchase-predictor:1.0</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the model image to <strong>OpenShift</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc login api.cluster.example.com:6443
+oc new-project model-deploy
+oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
+oc expose service purchase-predictor</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now we can use the Flask application with some commands such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
+ok%
+curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
+{"name":"Time to purchase amount predictor","version":"v1.0.0"}
+curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
+{"prediction":34,"status":200}</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this section we have manually:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Developed an application that uses the model</p>
+</li>
+<li>
+<p>Built an image with such application</p>
+</li>
+<li>
+<p>Push the image to a registry</p>
+</li>
+<li>
+<p>Use the image in an OpenShift cluster to create an application</p>
+</li>
+<li>
+<p>Expose the application&#8217;s route in OpenShift</p>
+</li>
+<li>
+<p>Use the application through a REST API to request a prediction</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>There are automated and faster ways to perform these steps, in the following sections, we will learn about runtimes that only require you to provide a model, and they automatically resolve provisioning an inference service for you.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Model Serving in RHODS</a></span>
+  <span class="next"><a href="section2.html">Section 2</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
