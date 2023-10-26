@@ -150,6 +150,9 @@
 <div class="paragraph">
 <p>The process of creating a model include steps for data collection and selection, the selection of an algorithm to process the data, training the model with such algorithm by tuning its hyperparameters, and once it is measured to produce the required results, exporting the model so that it can be deployed.</p>
 </div>
+<div class="paragraph">
+<p>In machine learning, a hyperparameter is a configuration setting that is not learned from the training data but is set prior to the training process. These settings are essential for controlling the behavior of a machine learning algorithm or model and can significantly impact the model&#8217;s performance. Hyperparameters are essential in machine learning because they define the behavior and performance of a model. Proper selection and tuning of hyperparameters can be a crucial part of the machine learning workflow and can significantly affect the success of a model in solving a particular problem.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/ml_workflow.drawio.svg" alt="Machine Learning Workflow">
@@ -222,6 +225,7 @@ test_x = x[80:]
 test_y = y[80:]
 
 # train a model using polynomial regression
+# The number 4 here represents a hyperparameter
 mymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))
 # export the model to a file
 filename = 'mymodel.pkl'
@@ -345,6 +349,20 @@ print(model(4))</code></pre>
 <h3 id="_web_application_that_uses_the_model"><a class="anchor" href="#_web_application_that_uses_the_model"></a>web application that uses the model</h3>
 <div class="paragraph">
 <p>The pickle model that we previously exported can be used in a Flask application. In this section we present an example Flask application that uses the model.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although we are actually serving a model with Flask in the exercise, Flask is not considered part of the Model Serving feature. This example represents one way in which some customers decide to embed their models in containers, although RHODS provides for mechanisms that can make this process of serving a model a simpler process, when provided with the proper model formats.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
