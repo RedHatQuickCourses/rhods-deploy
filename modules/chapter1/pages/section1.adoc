@@ -128,7 +128,7 @@ Navigate to that directory.
 
 . Download the `mymodel.pkl` file from JupyterLab into this directory.
 
-. In a python IDE, create a python script named `app.py` with the following code:
+. Open the directory with a python IDE, then create a python script named `app.py` with the following code:
 +
 ```python[app.py]
 from flask import Flask, request
