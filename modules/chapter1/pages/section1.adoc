@@ -27,7 +27,7 @@ image::workbench_options.png[Workbench Options]
 +
 image::terminal-install.png[Install packages]
 
-. In the **JupyterLab**, create a new notebook, and name it **purchase-amount**
+. In **JupyterLab**, create a new notebook, and name it **purchase-amount**.
 +
 image::purchase-amount-notebook.png[purchase-amount notebook]
 
