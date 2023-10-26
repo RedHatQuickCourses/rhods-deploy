@@ -182,7 +182,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0')
 ```
 
-. create a `requirements.txt` to describe the python dependencies to install on container startup:
+. Create a `requirements.txt` to describe the python dependencies to install on container startup:
 +
 ```[requirements.txt]
 click==8.0.3
