@@ -210,7 +210,7 @@ threadpoolctl==3.0.0
 Werkzeug==2.0.2
 ```
 
-. Create a `containerfile` to build an image with the Flask application:
+. Create a `Containerfile` to build an image with the Flask application:
 +
 ```docker[containerfile]
 # Base image
