@@ -115,7 +115,7 @@ image::prediction-with-model.png[prediction with model]
 At this moment the model can be exported and imported in other projects for its use. Normally there will be an S3 bucket or a model registry to store models and versions of such models, and instead of manually exporting the model, there would be pipelines making the model available.
 ====
 
-== The model in a container
+== Use the Model in a Container
 
 For this section, you will need postman (or docker) to create an image, and a registry to upload the resulting image.
 
