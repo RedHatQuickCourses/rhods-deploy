@@ -8,8 +8,6 @@ For example, in natural language processing, machine learning models can parse a
 
 The process of creating a model includes steps for data collection and selection, the selection of an algorithm to process the data, training the model, validating it, and exporting it so that it can be deployed in a later step.
 
-In machine learning, a hyperparameter is a configuration setting that is not learned from the training data but is set prior to the training process. These settings are essential for controlling the behavior of a machine learning algorithm or model and can significantly impact the model's performance. Hyperparameters are essential in machine learning because they define the behavior and performance of a model. Proper selection and tuning of hyperparameters can be a crucial part of the machine learning workflow and can significantly affect the success of a model in solving a particular problem.
-
 image::ml_workflow.drawio.svg[Machine Learning Workflow]
 
 == Train a model
