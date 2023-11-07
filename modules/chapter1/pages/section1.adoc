@@ -282,7 +282,7 @@ In this section we have manually:
 
 . Deployed the containerized application in OpenShift
 
-. Expose the application's route in OpenShift
+. Exposed the application's endpoint in OpenShift by creating a route
 
 . Use the application through a REST API to request a prediction
 
