@@ -280,7 +280,7 @@ In this section we have manually:
 
 . Push the image to a registry
 
-. Use the image in an OpenShift cluster to create an application
+. Deployed the containerized application in OpenShift
 
 . Expose the application's route in OpenShift
 
