@@ -286,5 +286,5 @@ In this section we have manually:
 
 . Consumed the model through the application's REST API to request a prediction
 
-There are automated and faster ways to perform these steps, in the following sections, we will learn about runtimes that only require you to provide a model, and they automatically resolve provisioning an inference service for you.
+There are automated and faster ways to perform these steps. In the following sections, we will learn about runtimes that only require you to provide a model, and they automatically provision an inference service for you.
 ====
