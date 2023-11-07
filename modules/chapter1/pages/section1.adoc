@@ -284,7 +284,7 @@ In this section we have manually:
 
 . Exposed the application's endpoint in OpenShift by creating a route
 
-. Use the application through a REST API to request a prediction
+. Consumed the model through the application's REST API to request a prediction
 
 There are automated and faster ways to perform these steps, in the following sections, we will learn about runtimes that only require you to provide a model, and they automatically resolve provisioning an inference service for you.
 ====
