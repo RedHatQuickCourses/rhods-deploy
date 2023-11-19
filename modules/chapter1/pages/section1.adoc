@@ -19,52 +19,21 @@ Then, open the workbench to go to the JuypterLab interface.
 +
 image::workbench_options.png[Workbench Options]
 
+. Import following repostitory to the workbench: https://github.com/RedHatQuickCourses/rhods-qc-apps.git
+
 . Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:
 +
 ```shell
-  pip install numpy matplotlib scikit-learn
+  pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter1/requirements.txt
 ```
 +
-image::terminal-install.png[Install packages]
+image::terminal-install.png[terminal install]
 
-. In **JupyterLab**, create a new notebook, and name it **purchase-amount**.
+. Open the notebook **purchase-amount** from the **rhods-qc-apps/4.rhods-deploy/chapter1/purchase-amount.ipynb** directory:
 +
 image::purchase-amount-notebook.png[purchase-amount notebook]
 
-. Use the following code to train and export a model that predicts the amount of a pruchase given the number of minutes to make such purchase in a website.
-+
-```python
-# Include required packages for execution
-import numpy
-import matplotlib.pyplot as plt
-from sklearn.metrics import r2_score
-import pickle
-
-# Create data
-numpy.random.seed(2)
-# Create a random set of numbers for a mock representation of minutes spent online
-x = numpy.random.normal(3,1,100)
-# Create a random set of number for a mock representation of the purchase amount
-y = numpy.random.normal(150,40,100) / x
-
-# Divide the data between tranin and test
-# where the training set is the 80% of the data
-# while the test set is the remaining 20%
-train_x = x[:80]
-train_y = y[:80]
-
-test_x = x[80:]
-test_y = y[80:]
-
-# train a model using polynomial regression
-# The number 4 here represents a hyperparameter
-mymodel = numpy.poly1d(numpy.polyfit(train_x, train_y, 4))
-# export the model to a file
-filename = 'mymodel.pkl'
-pickle.dump(mymodel, open(filename, 'wb'))
-```
-
-. Notice the creation of a new file in your environment, the `mymodel.pkl`
+. Run the notebook, and notice the creation of a new file in your environment, the `mymodel.pkl`
 +
 image::mymodel-pkl.png[Model file export]
 
@@ -91,25 +60,14 @@ The use of either of those formats depend on the target server runtime, some of 
 
 The model can be deserialized in another notebook, and used to generate a prediction:
 
-. Create a notebook called **use-purchase-amount**
+. Open the notebook **use-purchase-amount** from the **rhods-qc-apps/4.rhods-deploy/chapter1/use-purchase-amount.ipynb** directory:
 +
 image::use-purchase-amount-notebook.png[use-purchase-amount notebook create]
 
-. Use the following code to instantiate the model and request for a prediction
+. Run the **use-purchase-amount** notebook and notice the result:
 +
-```python
-# Include required packages for execution
-import pickle
-
-# Load models
-with open('mymodel.pkl', 'rb') as f:
-    model = pickle.load(f)
-  
-# perform a prediction using the model
-print(model(4))
-```
-+
-image::prediction-with-model.png[prediction with model]
+- You can get the same result without training the model again.
+- You are not training the model in the **user-purchase-amount** notebook, you are re-using the output from the training notebook, and using the generated model to generate an inference.
 
 [TIP]
 ====
