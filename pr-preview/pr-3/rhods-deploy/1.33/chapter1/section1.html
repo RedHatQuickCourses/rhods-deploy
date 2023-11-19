@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 1 :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Section 1: Concepts :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
     <link rel="prev" href="index.html">
     <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -50,7 +50,7 @@
     <a class="nav-link" href="index.html">Model Serving in RHODS</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1</a>
+    <a class="nav-link" href="section1.html">Section 1: Concepts</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section2.html">Section 2</a>
@@ -128,7 +128,7 @@
   <ul>
     <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
     <li><a href="index.html">Model Serving in RHODS</a></li>
-    <li><a href="section1.html">Section 1</a></li>
+    <li><a href="section1.html">Section 1: Concepts</a></li>
   </ul>
 </nav>
 </div>
@@ -137,29 +137,99 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 1</h1>
+<h1 class="page">Section 1: Concepts</h1>
 <div class="sect1">
-<h2 id="_the_model"><a class="anchor" href="#_the_model"></a>The model</h2>
+<h2 id="_model_serving"><a class="anchor" href="#_model_serving"></a>Model Serving</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A machine learning model is a program that can learn and make predictions or decisions based on data. It&#8217;s a fundamental component of machine learning, a subset of artificial intelligence. Machine learning models are designed to automatically improve their performance on a task through experience (i.e., training data) without being explicitly programmed for that task.</p>
+<p>Machine learning model serving refers to the process of deploying, managing, and exposing machine learning models for inference, allowing them to make predictions or classifications on new, unseen data. Once a machine learning model has been trained and fine-tuned on a specific task, serving involves making the model available for real-time or batch predictions in a production environment. This is a crucial step in the machine learning lifecycle, as it enables the integration of models into applications, systems, or services, allowing them to deliver value in real-world scenarios.</p>
 </div>
 <div class="paragraph">
-<p>For example, in natural language processing, machine learning models can parse and correctly recognize the intent behind previously unheard sentences or combinations of words. In image recognition, a machine learning model can be taught to recognize objects&#8201;&#8212;&#8201;such as cars or dogs. A machine learning model can perform such tasks by having it <em>trained</em> with a large dataset. During training, the machine learning algorithm is optimized to find certain patterns or outputs from the dataset, depending on the task. The output of this process&#8201;&#8212;&#8201;often a computer program with specific rules and data structures&#8201;&#8212;&#8201;is called a machine learning model.</p>
+<p>Key aspects of machine learning model serving include:</p>
 </div>
 <div class="paragraph">
-<p>The process of creating a model includes steps for data collection and selection, the selection of an algorithm to process the data, training the model, validating it, and exporting it so that it can be deployed in a later step.</p>
+<p><strong>Deployment</strong>:</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/ml_workflow.drawio.svg" alt="Machine Learning Workflow">
+<div class="paragraph">
+<p>After training, a machine learning model needs to be deployed to an environment where it can be accessed for inference. This can be on-premises, in the cloud, or on edge devices, depending on the application&#8217;s requirements.</p>
 </div>
+<div class="paragraph">
+<p><strong>Scalability</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Model serving systems need to be scalable to handle varying levels of demand. This involves ensuring that the infrastructure can handle increased load and that the serving architecture is designed for efficiency and resource optimization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Real-time Inference</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Many applications require real-time predictions, where the model responds to input data quickly. This is common in scenarios such as fraud detection, image recognition, and natural language processing.</p>
+</div>
+<div class="paragraph">
+<p><strong>Batch Inference</strong>:</p>
+</div>
+<div class="paragraph">
+<p>In some cases, models need to process large batches of data in a more efficient, non-real-time manner. This is common in scenarios like data preprocessing, analytics, and large-scale data transformations.</p>
+</div>
+<div class="paragraph">
+<p><strong>Monitoring and Logging</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Model serving systems often include monitoring and logging functionalities to track the performance and health of deployed models. This includes metrics such as response time, error rates, and resource utilization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Versioning:</strong></p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s important to manage and version different iterations of a model. This allows for easy rollback in case of issues and facilitates A/B testing when deploying new models.</p>
+</div>
+<div class="paragraph">
+<p><strong>Security</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Ensuring the security of the deployed models is crucial. This involves controlling access to the models, encrypting communications, and protecting against potential attacks or adversarial inputs.</p>
+</div>
+<div class="paragraph">
+<p><strong>Integration</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Model serving systems need to integrate seamlessly with other components of the application or system architecture. This often involves using APIs (Application Programming Interfaces) to facilitate communication between the model and the rest of the application.
+Popular tools and frameworks for model serving include TensorFlow Serving, Flask, FastAPI, Amazon SageMaker, and TensorFlow Extended (TFX), among others. These tools provide solutions for deploying, managing, and scaling machine learning models in production environments.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a model</h2>
+<h2 id="_model_server_runtime"><a class="anchor" href="#_model_server_runtime"></a>Model Server Runtime</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The terms "model server runtime" and "inference engine" are closely related in the context of deploying and serving machine learning models, but they refer to different components of the overall system.</p>
+</div>
+<div class="paragraph">
+<p>A model server runtime is the execution environment or platform where a trained machine learning model runs to make predictions or inferences. It is responsible for loading the model into memory, handling requests from clients, performing the inference, and returning the results. The runtime provides the necessary infrastructure for hosting the model, managing resources, and ensuring that the model&#8217;s predictions can be efficiently served in a production environment.</p>
+</div>
+<div class="paragraph">
+<p>The model server runtime can be a part of a larger deployment framework or service that includes features such as scalability, versioning, monitoring, and security. Examples of model server runtimes include TensorFlow Serving, TorchServe, and ONNX Runtime. These runtimes support the deployment of models trained using popular machine learning frameworks and provide a standardized way to serve predictions over APIs (Application Programming Interfaces).</p>
+</div>
+<div class="sect2">
+<h3 id="_inference_engine"><a class="anchor" href="#_inference_engine"></a>Inference Engine:</h3>
+<div class="paragraph">
+<p>An inference engine is a component responsible for executing the forward pass of a machine learning model to generate predictions based on input data. It is a crucial part of the model server runtime and is specifically designed for performing inference tasks efficiently. The inference engine takes care of optimizations, such as hardware acceleration and parallelization, to ensure that predictions are made quickly and with minimal resource utilization.</p>
+</div>
+<div class="paragraph">
+<p>The inference engine may be integrated into the model server runtime or work alongside it, depending on the specific architecture. For example, TensorFlow Serving incorporates TensorFlow&#8217;s inference engine, and ONNX Runtime serves as both a runtime and an inference engine for models in the Open Neural Network Exchange (ONNX) format.</p>
+</div>
+<div class="paragraph">
+<p><strong>Relationship</strong>:
+In summary, the model server runtime provides the overall environment for hosting and managing machine learning models in production, while the inference engine is responsible for the actual computation of predictions during inference. The two work together to deliver a scalable, efficient, and reliable solution for serving machine learning models in real-world applications. The choice of model server runtime and inference engine depends on factors such as the machine learning framework used, deployment requirements, and the specific optimizations needed for the target hardware.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unravel_the_runtime"><a class="anchor" href="#_unravel_the_runtime"></a>Unravel The Runtime</h3>
+<div class="paragraph">
+<p>When deploying machine learning models, we need to deploy a container that serves a <strong>Runtime</strong> and uses a <strong>Model</strong> to perform predictions, consider the following example:</p>
+</div>
+<div class="sect3">
+<h4 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a model</h4>
 <div class="paragraph">
 <p>Using a RHODS instance, let us train and deploy an example.</p>
 </div>
@@ -247,11 +317,8 @@ Then, open the workbench to go to the JuypterLab interface.</p>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_use_the_model_in_another_notebook"><a class="anchor" href="#_use_the_model_in_another_notebook"></a>Use the model in another notebook</h2>
-<div class="sectionbody">
+<div class="sect4">
+<h5 id="_use_the_model_in_another_notebook"><a class="anchor" href="#_use_the_model_in_another_notebook"></a>Use the model in another notebook</h5>
 <div class="paragraph">
 <p>The model can be deserialized in another notebook, and used to generate a prediction:</p>
 </div>
@@ -293,6 +360,9 @@ Then, open the workbench to go to the JuypterLab interface.</p>
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -532,6 +602,50 @@ curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_model_servers_and_container_builds"><a class="anchor" href="#_model_servers_and_container_builds"></a>Model Servers And Container Builds</h3>
+<div class="paragraph">
+<p>As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.</p>
+</div>
+<div class="paragraph">
+<p>OpenShift offer integrations to pre-configured images that can receive an specific model format.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://onnx.ai">ONNX</a>: An open standard for machine learning interoperability.</p>
+</li>
+<li>
+<p><a href="https://docs.openvino.ai/latest/openvino_ir.html">OpenVino IR</a>: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to leverage the beneffits of such configurations you will:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Export the model in a format compatible with one of the available RHODS runtimes.</p>
+</li>
+<li>
+<p>Upload the model to an S3</p>
+</li>
+<li>
+<p>Create a Data Connection to the S3 containing the model</p>
+</li>
+<li>
+<p>Create or use one of the available serving runtimes in a Model Server configuration that specifies the size and resources to use while setting up an inference engine.</p>
+</li>
+<li>
+<p>Start a model server instance to publish your model for consumtion</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>While publishing this model server instance, the configurations will allow you to define how applications securelly connect to your model server to request for predictions, and the resources that it can provide.</p>
 </div>
 </div>
 </div>
