@@ -1,16 +1,65 @@
-= Section 1
+= Section 1: Concepts
 
-== The model
+== Model Serving
 
-A machine learning model is a program that can learn and make predictions or decisions based on data. It's a fundamental component of machine learning, a subset of artificial intelligence. Machine learning models are designed to automatically improve their performance on a task through experience (i.e., training data) without being explicitly programmed for that task.
+Machine learning model serving refers to the process of deploying, managing, and exposing machine learning models for inference, allowing them to make predictions or classifications on new, unseen data. Once a machine learning model has been trained and fine-tuned on a specific task, serving involves making the model available for real-time or batch predictions in a production environment. This is a crucial step in the machine learning lifecycle, as it enables the integration of models into applications, systems, or services, allowing them to deliver value in real-world scenarios.
 
-For example, in natural language processing, machine learning models can parse and correctly recognize the intent behind previously unheard sentences or combinations of words. In image recognition, a machine learning model can be taught to recognize objects -- such as cars or dogs. A machine learning model can perform such tasks by having it __trained__ with a large dataset. During training, the machine learning algorithm is optimized to find certain patterns or outputs from the dataset, depending on the task. The output of this process -- often a computer program with specific rules and data structures -- is called a machine learning model.
+Key aspects of machine learning model serving include:
 
-The process of creating a model includes steps for data collection and selection, the selection of an algorithm to process the data, training the model, validating it, and exporting it so that it can be deployed in a later step.
+**Deployment**:
 
-image::ml_workflow.drawio.svg[Machine Learning Workflow]
+After training, a machine learning model needs to be deployed to an environment where it can be accessed for inference. This can be on-premises, in the cloud, or on edge devices, depending on the application's requirements.
 
-== Train a model
+**Scalability**:
+
+Model serving systems need to be scalable to handle varying levels of demand. This involves ensuring that the infrastructure can handle increased load and that the serving architecture is designed for efficiency and resource optimization.
+
+**Real-time Inference**:
+
+Many applications require real-time predictions, where the model responds to input data quickly. This is common in scenarios such as fraud detection, image recognition, and natural language processing.
+
+**Batch Inference**:
+
+In some cases, models need to process large batches of data in a more efficient, non-real-time manner. This is common in scenarios like data preprocessing, analytics, and large-scale data transformations.
+
+**Monitoring and Logging**:
+
+Model serving systems often include monitoring and logging functionalities to track the performance and health of deployed models. This includes metrics such as response time, error rates, and resource utilization.
+
+**Versioning:**
+
+It's important to manage and version different iterations of a model. This allows for easy rollback in case of issues and facilitates A/B testing when deploying new models.
+
+**Security**:
+
+Ensuring the security of the deployed models is crucial. This involves controlling access to the models, encrypting communications, and protecting against potential attacks or adversarial inputs.
+
+**Integration**:
+
+Model serving systems need to integrate seamlessly with other components of the application or system architecture. This often involves using APIs (Application Programming Interfaces) to facilitate communication between the model and the rest of the application.
+Popular tools and frameworks for model serving include TensorFlow Serving, Flask, FastAPI, Amazon SageMaker, and TensorFlow Extended (TFX), among others. These tools provide solutions for deploying, managing, and scaling machine learning models in production environments.
+
+== Model Server Runtime
+
+The terms "model server runtime" and "inference engine" are closely related in the context of deploying and serving machine learning models, but they refer to different components of the overall system.
+
+A model server runtime is the execution environment or platform where a trained machine learning model runs to make predictions or inferences. It is responsible for loading the model into memory, handling requests from clients, performing the inference, and returning the results. The runtime provides the necessary infrastructure for hosting the model, managing resources, and ensuring that the model's predictions can be efficiently served in a production environment.
+
+The model server runtime can be a part of a larger deployment framework or service that includes features such as scalability, versioning, monitoring, and security. Examples of model server runtimes include TensorFlow Serving, TorchServe, and ONNX Runtime. These runtimes support the deployment of models trained using popular machine learning frameworks and provide a standardized way to serve predictions over APIs (Application Programming Interfaces).
+
+=== Inference Engine:
+An inference engine is a component responsible for executing the forward pass of a machine learning model to generate predictions based on input data. It is a crucial part of the model server runtime and is specifically designed for performing inference tasks efficiently. The inference engine takes care of optimizations, such as hardware acceleration and parallelization, to ensure that predictions are made quickly and with minimal resource utilization.
+
+The inference engine may be integrated into the model server runtime or work alongside it, depending on the specific architecture. For example, TensorFlow Serving incorporates TensorFlow's inference engine, and ONNX Runtime serves as both a runtime and an inference engine for models in the Open Neural Network Exchange (ONNX) format.
+
+**Relationship**:
+In summary, the model server runtime provides the overall environment for hosting and managing machine learning models in production, while the inference engine is responsible for the actual computation of predictions during inference. The two work together to deliver a scalable, efficient, and reliable solution for serving machine learning models in real-world applications. The choice of model server runtime and inference engine depends on factors such as the machine learning framework used, deployment requirements, and the specific optimizations needed for the target hardware.
+
+=== Unravel The Runtime
+
+When deploying machine learning models, we need to deploy a container that serves a **Runtime** and uses a **Model** to perform predictions, consider the following example:
+
+==== Train a model
 
 Using a RHODS instance, let us train and deploy an example.
 
@@ -56,7 +105,7 @@ There are different formats and libraries to export the model, in this case we a
 The use of either of those formats depend on the target server runtime, some of them are proven to be more eficient than others for certain type of training algorithms and model sizes.
 ====
 
-== Use the model in another notebook
+===== Use the model in another notebook
 
 The model can be deserialized in another notebook, and used to generate a prediction:
 
@@ -246,3 +295,22 @@ In this section we have manually:
 
 There are automated and faster ways to perform these steps. In the following sections, we will learn about runtimes that only require you to provide a model, and they automatically provision an inference service for you.
 ====
+
+=== Model Servers And Container Builds
+
+As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.
+
+OpenShift offer integrations to pre-configured images that can receive an specific model format.
+
+- https://onnx.ai[ONNX]: An open standard for machine learning interoperability.
+- https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.
+
+In order to leverage the beneffits of such configurations you will:
+
+. Export the model in a format compatible with one of the available RHODS runtimes.
+. Upload the model to an S3
+. Create a Data Connection to the S3 containing the model
+. Create or use one of the available serving runtimes in a Model Server configuration that specifies the size and resources to use while setting up an inference engine.
+. Start a model server instance to publish your model for consumtion
+
+While publishing this model server instance, the configurations will allow you to define how applications securelly connect to your model server to request for predictions, and the resources that it can provide.
