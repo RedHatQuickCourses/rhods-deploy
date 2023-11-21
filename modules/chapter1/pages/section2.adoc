@@ -63,7 +63,7 @@ It is recommended to use a workbench that was created with the **Standard Data S
 +
 image::iris_training_onnx.png[iris training to onnx format]
 
-. Observe that a file has been created: `rf_iris.onnx`, export this file, so that we can upload it to S3.
+. Observe that a file has been created: `rf_iris.onnx`, download this file to your computer, so that we can upload it to S3.
 +
 image::iris-download.png[iris model download]
 
