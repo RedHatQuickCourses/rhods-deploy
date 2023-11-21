@@ -59,6 +59,11 @@ It is recommended to use a workbench that was created with the **Standard Data S
   pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter2/requirements.txt
 ```
 
+[TIP]
+====
+You might also want to execute the preceding command in the notebook kernel by using the `%pip` syntax in the notebook. 
+Alternatively, you can create a custom notebook image that includes the `skl2onnx` package.
+====
 . Open and run the notebook **iris_to_onnx** from **rhods-qc-apps/4.rhods-deploy/chapter2** directory
 +
 image::iris_training_onnx.png[iris training to onnx format]
