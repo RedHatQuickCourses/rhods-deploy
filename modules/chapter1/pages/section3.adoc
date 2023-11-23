@@ -14,7 +14,10 @@ In order to run this exercise, be sure to have handy the model we created in the
 
 This exercise will guide you through the broad steps necessary to deploy a custom Serving Runtime in order to serve a model using the Triton Runtime (NVIDIA Triton Inference Server).
 
+[NOTE]
+====
 While RHODS supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
+====
 
 == Adding The Custom Runtime
 
