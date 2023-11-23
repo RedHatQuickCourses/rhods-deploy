@@ -1,4 +1,4 @@
-= Section 3: Creating a Custom Model Serving Runtime
+= Creating a Custom Model Serving Runtime
 
 A model-serving runtime provides integration with a specified model server and the model frameworks that it supports. By default, Red Hat OpenShift Data Science includes the OpenVINO Model Server runtime. However, if this runtime doesn’t meet your needs (it doesn’t support a particular model framework, for example), you might want to add your own, custom runtimes.
 
@@ -14,7 +14,7 @@ In order to run this exercise, be sure to have handy the model we created in the
 
 This exercise will guide you through the broad steps necessary to deploy a custom Serving Runtime in order to serve a model using the Triton Runtime (NVIDIA Triton Inference Server).
 
-While RHODS supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
+While RHODS supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
 
 == Adding The Custom Runtime
 

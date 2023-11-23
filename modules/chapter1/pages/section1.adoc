@@ -1,4 +1,4 @@
-= Section 1: Concepts
+= Model Serving Concepts
 
 == Model Serving
 
@@ -64,11 +64,11 @@ When deploying machine learning models, we need to deploy a container that serve
 Using a RHODS instance, let us train and deploy an example.
 
 . In a data science project, create a `Standard Data Science`workbench.
-Then, open the workbench to go to the JuypterLab interface.
+Then, open the workbench to go to the JupyterLab interface.
 +
 image::workbench_options.png[Workbench Options]
 
-. Import following repostitory to the workbench: https://github.com/RedHatQuickCourses/rhods-qc-apps.git
+. Import following repository to the workbench: https://github.com/RedHatQuickCourses/rhods-qc-apps.git
 
 . Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:
 +
@@ -102,7 +102,7 @@ There are different formats and libraries to export the model, in this case we a
 
 * Torch
 
-The use of either of those formats depend on the target server runtime, some of them are proven to be more eficient than others for certain type of training algorithms and model sizes.
+The use of either of those formats depend on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.
 ====
 
 ===== Use the model in another notebook
@@ -298,19 +298,19 @@ There are automated and faster ways to perform these steps. In the following sec
 
 === Model Servers And Container Builds
 
-As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.
+As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumption. In our example we used Flask.
 
 OpenShift offer integrations to pre-configured images that can receive an specific model format.
 
 - https://onnx.ai[ONNX]: An open standard for machine learning interoperability.
 - https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.
 
-In order to leverage the beneffits of such configurations you will:
+In order to leverage the benefits of such configurations you will:
 
 . Export the model in a format compatible with one of the available RHODS runtimes.
 . Upload the model to an S3
 . Create a Data Connection to the S3 containing the model
 . Create or use one of the available serving runtimes in a Model Server configuration that specifies the size and resources to use while setting up an inference engine.
-. Start a model server instance to publish your model for consumtion
+. Start a model server instance to publish your model for consumption
 
-While publishing this model server instance, the configurations will allow you to define how applications securelly connect to your model server to request for predictions, and the resources that it can provide.
+While publishing this model server instance, the configurations will allow you to define how applications securely connect to your model server to request for predictions, and the resources that it can provide.
