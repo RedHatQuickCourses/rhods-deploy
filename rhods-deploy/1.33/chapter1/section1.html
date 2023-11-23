@@ -605,12 +605,14 @@ curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase
 </div>
 </div>
 <div class="sect2">
-<h3 id="_model_servers_and_container_builds"><a class="anchor" href="#_model_servers_and_container_builds"></a>Model Servers And Container Builds</h3>
+<h3 id="_rhoai_model_serving_runtimes"><a class="anchor" href="#_rhoai_model_serving_runtimes"></a>RHOAI Model Serving Runtimes</h3>
 <div class="paragraph">
-<p>As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.</p>
+<p>In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.</p>
 </div>
 <div class="paragraph">
-<p>OpenShift offer integrations to pre-configured images that can receive an specific model format.</p>
+<p>However, in OpenShift AI, you do not need to manually create serving runtimes.
+By default, OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
+OpenVINO supports various model formats, such as the following ones:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -623,7 +625,7 @@ curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase
 </ul>
 </div>
 <div class="paragraph">
-<p>In order to leverage the beneffits of such configurations you will:</p>
+<p>In order to leverage the benefits of OpenVINO, you must:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
