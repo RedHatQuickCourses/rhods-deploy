@@ -296,16 +296,18 @@ In this section we have manually:
 There are automated and faster ways to perform these steps. In the following sections, we will learn about runtimes that only require you to provide a model, and they automatically provision an inference service for you.
 ====
 
-=== Model Servers And Container Builds
+=== RHOAI Model Serving Runtimes
 
-As you can see in the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.
+In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.
 
-OpenShift offer integrations to pre-configured images that can receive an specific model format.
+However, in OpenShift AI, you do not need to manually create serving runtimes.
+By default, OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
+OpenVINO supports various model formats, such as the following ones:
 
 - https://onnx.ai[ONNX]: An open standard for machine learning interoperability.
 - https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.
 
-In order to leverage the beneffits of such configurations you will:
+In order to leverage the benefits of OpenVINO, you must:
 
 . Export the model in a format compatible with one of the available RHODS runtimes.
 . Upload the model to an S3
