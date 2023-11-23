@@ -257,6 +257,8 @@ podman build -t purchase-predictor:1.0 .
 podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
 podman push quay.io/user_name/purchase-predictor:1.0
 ```
++
+After you push the image, open quay.io in your browser and make the image public.
 
 . Deploy the model image to **OpenShift**
 +
