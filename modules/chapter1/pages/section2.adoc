@@ -1,6 +1,6 @@
-= Section 2: OpenVINO Model Serving
+= OpenVINO Model Serving
 
-In this section we will work in an excercise to deploy a model to an OpenVINO Serving Runtime.
+In this section we will work in an exercise to deploy a model to an OpenVINO Serving Runtime.
 
 == Prepare MinIO
 
@@ -121,7 +121,7 @@ It is important to pay special attention to the following characteristics:
 +
 image::model-server-size.png[model server size]
 
-- **Model Route**: There are models that can be consumed only from other containers inside the same OpenShift cluster, here we have the hability to don't make this server available to entities outside our cluster, or to instruct the model server configuration to assign an external route. When we don't expose the model externally through a route, click on the Internal Service link in the Inference endpoint section:
+- **Model Route**: There are models that can be consumed only from other containers inside the same OpenShift cluster, here we have the ability to not make this server available to entities outside our cluster, or to instruct the model server configuration to assign an external route. When we don't expose the model externally through a route, click on the Internal Service link in the Inference endpoint section:
 +
 image::figure14_0.png[Inference endpoint]
 +

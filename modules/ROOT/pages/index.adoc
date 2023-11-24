@@ -1,12 +1,57 @@
 = Deploying Machine Learning Models with Red Hat OpenShift Data Science
 :navtitle: Home
 
-== Introduction
+Welcome to this quick course on the _Deploying Machine Learning Models with Red Hat OpenShift Data Science_.
+This course is the fifth in a series of 6 courses about Red Hat OpenShift Data Science:
 
-Generally speaking, an organization decides to train a model, because the organization wishes to empower the applications portfolio with inferences made by such model. In this way, the given known data points of a given event, can produce an inference, guess, or prediction of a topic of interest.
+1. https://redhatquickcourses.github.io/rhods-intro[Introduction to Red Hat OpenShift Data Science]
+2. https://redhatquickcourses.github.io/rhods-admin[Red Hat OpenShift Data Science Administration]
+3. https://redhatquickcourses.github.io/rhods-analysis[Data Analysis and Visualization with Red Hat OpenShift Data Science]
+4. https://redhatquickcourses.github.io/rhods-model[Creating Machine Learning Models with Red Hat OpenShift Data Science]
+5. Deploying Machine Learning Models with Red Hat OpenShift Data Science (_This course_)
+6. https://redhatquickcourses.github.io/rhods-pipelines[Automation using Data Science Pipelines]
 
-In this course, we will explore how we can leverage Red Hat Data Science tools to answer the question in the following picture:
+NOTE: After you have completed all the courses in the learning path, you can attempt the https://github.com/RedHatQuickCourses/rhods-qc-apps/tree/main/7.hands-on-lab["Hit the RHODS"] exercise, that tests your understanding of the concepts taught in all the courses.
 
-image::why_deploy.drawio.svg[]
+== Authors
 
-How do we deliver a model to an inference engine, or server, so that, when the server receives a request from any of the applications in the oragnization's portfolio, the inference engine can reply with a prediction made based in the model that we have previously worked hard to train.
+The PTL team acknowledges the valuable contributions of the following Red Hat associates:
+
+* Diego Alejandro Torres
+* Jaime Ramirez Castillo
+* Max Murakami
+* Ravi Srinivasan
+
+== Classroom Environment
+
+There are two options, based on whether you are taking this course standalone (just this course), or as part of the full 6 course learning path where you installed RHODS on an OpenShift cluster in the second course in the learning path, _Red Hat OpenShift Data Science Administration_.
+
+=== Option 1: Standalone (RHODS Pre-installed on OpenShift)
+
+You will use the https://demo.redhat.com/catalog?search=openshift+data+science&item=babylon-catalog-prod%2Fsandboxes-gpte.ocp4-workshop-rhods-base-aws.prod[Base RHODS on AWS] catalog item in the Red Hat Demo Platform (RHDP) to run the hands on exercises in this course.
+
+This classroom has a pre-installed version of Red Hat OpenShift Data Science on OpenShift. 
+
+=== Option 2: Six Course Learning Path
+
+Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod[Red Hat OpenShift Container Platform 4.13 Workshop] catalog item from the _Red Hat OpenShift Data Science Administration_ course.
+
+This classroom does *NOT* have RHODS pre-installed. You are expected to complete the _Red Hat OpenShift Data Science Administration_ course, where you install and configure a basic RHODS instance, and then continue with this course.
+
+== Prerequisites
+
+* Take the Introduction to https://www.redhat.com/en/services/training/ad141-red-hat-training-presents-introduction-to-python-programming[Python Programming (AD141)] training course or demonstrate equivalent knowledge of Python programming
+* Basic knowledge of machine learning foundations is recommended.
+* Basics of creating and consuming REST APIs programmatically 
+* Basic knowledge of the Python libraries for machine learning and deep learning
+* Experience with OpenShift is recommended, but not mandatory (in case students have to do troubleshooting)
+
+== Objectives
+
+The overall objectives of this course include:
+
+* Deploy and serve machine learning models on OpenShift
+* Model deployment with RHODS model serving
+* Model serving authentication and authorization
+* Troubleshoot deployed models
+* Send inference requests to deployed models via REST API calls

@@ -1,6 +1,12 @@
 = Model Serving in RHODS
 
-In this chapter, we will describe the concepts and terminology around model serving on RHODS.
+== Introduction
+
+Generally speaking, an organization decides to train a model, because the organization wishes to empower the applications portfolio with inferences made by such model. In this way, the given known data points of a given event, can produce an inference, guess, or prediction of a topic of interest.
+
+In this course, you will learn how to leverage Red Hat OpenShift Data Science to serve machine learning models.
+
+How do we deliver a model to an inference engine, or server, so that, when the server receives a request from any of the applications in the organization's portfolio, the inference engine can reply with a prediction made based in the model that we have previously worked hard to train?
 
 Machine learning models must be deployed in a production environment to process real-time data and handle the problem they were designed to solve.
 
@@ -9,11 +15,3 @@ Deploying a model in a production environment means that the model that has been
 Consume from a model, means that software applications will use a communication method, often REST/HTTP to send a prompt request to a server, such server will fire a request to the model and provide a response. It is evident that the server processing the request, and providing a response based on the model needs to have access to such model.
 
 image::deploy_meaning.drawio.svg[]
-
-Here are some of the concepts that we will explain in this chapter:
-
-. Model Server
-. Serving Runtime
-. Model server authentication
-. GPU Support for model serving
-. Model serving formats
