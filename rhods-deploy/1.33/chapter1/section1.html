@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 1: Concepts :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Model Serving Concepts :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
     <link rel="prev" href="index.html">
     <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -50,51 +50,15 @@
     <a class="nav-link" href="index.html">Model Serving in RHODS</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1: Concepts</a>
+    <a class="nav-link" href="section1.html">Model Serving Concepts</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2: OpenVINO Model Serving</a>
+    <a class="nav-link" href="section2.html">OpenVINO Model Serving</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a>
+    <a class="nav-link" href="section3.html">Creating a Custom Model Serving Runtime</a>
   </li>
 </ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
   </li>
 </ul>
   </li>
@@ -128,7 +92,7 @@
   <ul>
     <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
     <li><a href="index.html">Model Serving in RHODS</a></li>
-    <li><a href="section1.html">Section 1: Concepts</a></li>
+    <li><a href="section1.html">Model Serving Concepts</a></li>
   </ul>
 </nav>
 </div>
@@ -137,7 +101,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 1: Concepts</h1>
+<h1 class="page">Model Serving Concepts</h1>
 <div class="sect1">
 <h2 id="_model_serving"><a class="anchor" href="#_model_serving"></a>Model Serving</h2>
 <div class="sectionbody">
@@ -237,7 +201,7 @@ In summary, the model server runtime provides the overall environment for hostin
 <ol class="arabic">
 <li>
 <p>In a data science project, create a `Standard Data Science`workbench.
-Then, open the workbench to go to the JuypterLab interface.</p>
+Then, open the workbench to go to the JupyterLab interface.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/workbench_options.png" alt="Workbench Options">
@@ -245,7 +209,7 @@ Then, open the workbench to go to the JuypterLab interface.</p>
 </div>
 </li>
 <li>
-<p>Import following repostitory to the workbench: <a href="https://github.com/RedHatQuickCourses/rhods-qc-apps.git" class="bare">https://github.com/RedHatQuickCourses/rhods-qc-apps.git</a></p>
+<p>Import following repository to the workbench: <a href="https://github.com/RedHatQuickCourses/rhods-qc-apps.git" class="bare">https://github.com/RedHatQuickCourses/rhods-qc-apps.git</a></p>
 </li>
 <li>
 <p>Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:</p>
@@ -311,7 +275,7 @@ Then, open the workbench to go to the JuypterLab interface.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>The use of either of those formats depend on the target server runtime, some of them are proven to be more eficient than others for certain type of training algorithms and model sizes.</p>
+<p>The use of either of those formats depend on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.</p>
 </div>
 </td>
 </tr>
@@ -645,19 +609,19 @@ OpenVINO supports various model formats, such as the following ones:</p>
 <p>Create or use one of the available serving runtimes in a Model Server configuration that specifies the size and resources to use while setting up an inference engine.</p>
 </li>
 <li>
-<p>Start a model server instance to publish your model for consumtion</p>
+<p>Start a model server instance to publish your model for consumption</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>While publishing this model server instance, the configurations will allow you to define how applications securelly connect to your model server to request for predictions, and the resources that it can provide.</p>
+<p>While publishing this model server instance, the configurations will allow you to define how applications securely connect to your model server to request for predictions, and the resources that it can provide.</p>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">Model Serving in RHODS</a></span>
-  <span class="next"><a href="section2.html">Section 2: OpenVINO Model Serving</a></span>
+  <span class="next"><a href="section2.html">OpenVINO Model Serving</a></span>
 </nav>
 </article>
   </div>

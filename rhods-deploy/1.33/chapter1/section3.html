@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 3: Creating a Custom Model Serving Runtime :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Creating a Custom Model Serving Runtime :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
     <link rel="prev" href="section2.html">
-    <link rel="next" href="../chapter2/index.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -50,51 +49,15 @@
     <a class="nav-link" href="index.html">Model Serving in RHODS</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1: Concepts</a>
+    <a class="nav-link" href="section1.html">Model Serving Concepts</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2: OpenVINO Model Serving</a>
+    <a class="nav-link" href="section2.html">OpenVINO Model Serving</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a>
+    <a class="nav-link" href="section3.html">Creating a Custom Model Serving Runtime</a>
   </li>
 </ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
   </li>
 </ul>
   </li>
@@ -128,7 +91,7 @@
   <ul>
     <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
     <li><a href="index.html">Model Serving in RHODS</a></li>
-    <li><a href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a></li>
+    <li><a href="section3.html">Creating a Custom Model Serving Runtime</a></li>
   </ul>
 </nav>
 </div>
@@ -137,7 +100,7 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 3: Creating a Custom Model Serving Runtime</h1>
+<h1 class="page">Creating a Custom Model Serving Runtime</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -170,8 +133,19 @@
 <div class="paragraph">
 <p>This exercise will guide you through the broad steps necessary to deploy a custom Serving Runtime in order to serve a model using the Triton Runtime (NVIDIA Triton Inference Server).</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>While RHODS supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.</p>
+<p>While RHODS supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -433,8 +407,7 @@ You can be creative and name it differently, just mind your selection when runni
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="section2.html">Section 2: OpenVINO Model Serving</a></span>
-  <span class="next"><a href="../chapter2/index.html">Chapter 2</a></span>
+  <span class="prev"><a href="section2.html">OpenVINO Model Serving</a></span>
 </nav>
 </article>
   </div>

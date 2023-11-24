@@ -50,51 +50,15 @@
     <a class="nav-link" href="index.html">Model Serving in RHODS</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1: Concepts</a>
+    <a class="nav-link" href="section1.html">Model Serving Concepts</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2: OpenVINO Model Serving</a>
+    <a class="nav-link" href="section2.html">OpenVINO Model Serving</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a>
+    <a class="nav-link" href="section3.html">Creating a Custom Model Serving Runtime</a>
   </li>
 </ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
   </li>
 </ul>
   </li>
@@ -137,8 +101,17 @@
 </aside>
 <article class="doc">
 <h1 class="page">Model Serving in RHODS</h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter, we will describe the concepts and terminology around model serving on RHODS.</p>
+<p>Generally speaking, an organization decides to train a model, because the organization wishes to empower the applications portfolio with inferences made by such model. In this way, the given known data points of a given event, can produce an inference, guess, or prediction of a topic of interest.</p>
+</div>
+<div class="paragraph">
+<p>In this course, you will learn how to leverage Red Hat OpenShift Data Science to serve machine learning models.</p>
+</div>
+<div class="paragraph">
+<p>How do we deliver a model to an inference engine, or server, so that, when the server receives a request from any of the applications in the organization&#8217;s portfolio, the inference engine can reply with a prediction made based in the model that we have previously worked hard to train?</p>
 </div>
 <div class="paragraph">
 <p>Machine learning models must be deployed in a production environment to process real-time data and handle the problem they were designed to solve.</p>
@@ -154,31 +127,11 @@
 <img src="_images/deploy_meaning.drawio.svg" alt="deploy meaning.drawio">
 </div>
 </div>
-<div class="paragraph">
-<p>Here are some of the concepts that we will explain in this chapter:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Model Server</p>
-</li>
-<li>
-<p>Serving Runtime</p>
-</li>
-<li>
-<p>Model server authentication</p>
-</li>
-<li>
-<p>GPU Support for model serving</p>
-</li>
-<li>
-<p>Model serving formats</p>
-</li>
-</ol>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../index.html">Home</a></span>
-  <span class="next"><a href="section1.html">Section 1: Concepts</a></span>
+  <span class="next"><a href="section1.html">Model Serving Concepts</a></span>
 </nav>
 </article>
   </div>

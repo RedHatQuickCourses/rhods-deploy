@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 2: OpenVINO Model Serving :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>OpenVINO Model Serving :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
     <link rel="prev" href="section1.html">
     <link rel="next" href="section3.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -50,51 +50,15 @@
     <a class="nav-link" href="index.html">Model Serving in RHODS</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1: Concepts</a>
+    <a class="nav-link" href="section1.html">Model Serving Concepts</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section2.html">Section 2: OpenVINO Model Serving</a>
+    <a class="nav-link" href="section2.html">OpenVINO Model Serving</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a>
+    <a class="nav-link" href="section3.html">Creating a Custom Model Serving Runtime</a>
   </li>
 </ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter2/index.html">Chapter 2</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Section 1</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../chapter3/index.html">Chapter 3</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section1.html">Section 1</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter3/section2.html">Section 2</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../appendix/appendix.html">Appendix A</a>
   </li>
 </ul>
   </li>
@@ -128,7 +92,7 @@
   <ul>
     <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
     <li><a href="index.html">Model Serving in RHODS</a></li>
-    <li><a href="section2.html">Section 2: OpenVINO Model Serving</a></li>
+    <li><a href="section2.html">OpenVINO Model Serving</a></li>
   </ul>
 </nav>
 </div>
@@ -137,11 +101,11 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 2: OpenVINO Model Serving</h1>
+<h1 class="page">OpenVINO Model Serving</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this section we will work in an excercise to deploy a model to an OpenVINO Serving Runtime.</p>
+<p>In this section we will work in an exercise to deploy a model to an OpenVINO Serving Runtime.</p>
 </div>
 </div>
 </div>
@@ -399,7 +363,7 @@ It is important to pay special attention to the following characteristics:</p>
 </div>
 </li>
 <li>
-<p><strong>Model Route</strong>: There are models that can be consumed only from other containers inside the same OpenShift cluster, here we have the hability to don&#8217;t make this server available to entities outside our cluster, or to instruct the model server configuration to assign an external route. When we don&#8217;t expose the model externally through a route, click on the Internal Service link in the Inference endpoint section:</p>
+<p><strong>Model Route</strong>: There are models that can be consumed only from other containers inside the same OpenShift cluster, here we have the ability to not make this server available to entities outside our cluster, or to instruct the model server configuration to assign an external route. When we don&#8217;t expose the model externally through a route, click on the Internal Service link in the Inference endpoint section:</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/figure14_0.png" alt="Inference endpoint">
@@ -543,8 +507,8 @@ oc get events -n iris-project</code></pre>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="section1.html">Section 1: Concepts</a></span>
-  <span class="next"><a href="section3.html">Section 3: Creating a Custom Model Serving Runtime</a></span>
+  <span class="prev"><a href="section1.html">Model Serving Concepts</a></span>
+  <span class="next"><a href="section3.html">Creating a Custom Model Serving Runtime</a></span>
 </nav>
 </article>
   </div>
