@@ -36,6 +36,11 @@ This classroom has a pre-installed version of Red Hat OpenShift Data Science on 
 
 Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod[Red Hat OpenShift Container Platform 4.13 Workshop] catalog item from the _Red Hat OpenShift Data Science Administration_ course.
 
+[TIP]
+====
+To prevent problems when allocating the workbench pods, make sure that your catalog item has been configured with `64Gi` as the worker memory size.
+====
+
 This classroom does *NOT* have RHODS pre-installed. You are expected to complete the _Red Hat OpenShift Data Science Administration_ course, where you install and configure a basic RHODS instance, and then continue with this course.
 
 == Prerequisites
