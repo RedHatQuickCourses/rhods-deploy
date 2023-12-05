@@ -125,7 +125,7 @@ At this moment the model can be exported and imported in other projects for its 
 
 == Use the Model in a Container
 
-For this section, you will need postman (or docker) to create an image, and a registry to upload the resulting image.
+For this section, you need Podman to create an image, and a registry to upload the resulting image.
 
 === web application that uses the model
 
