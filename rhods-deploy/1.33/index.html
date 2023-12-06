@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploying Machine Learning Models with Red Hat OpenShift Data Science :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Deploying Machine Learning Models with Red Hat OpenShift AI :: Deploying Machine Learning Models with Red Hat OpenShift AI</title>
     <link rel="next" href="chapter1/index.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -14,7 +14,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../..">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -33,7 +33,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></h3>
+    <h3 class="title"><a href="index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -46,7 +46,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="chapter1/index.html">Model Serving in RHODS</a>
+    <a class="nav-link" href="chapter1/index.html">Model Serving in Red Hat OpenShift AI</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="chapter1/section1.html">Model Serving Concepts</a>
@@ -66,12 +66,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift Data Science</span>
+    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift AI</span>
     <span class="version">1.33</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="title" href="index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">1.33</a>
@@ -89,7 +89,7 @@
   <a href="index.html" class="home-link is-current"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
+    <li><a href="index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></li>
     <li><a href="index.html">Home</a></li>
   </ul>
 </nav>
@@ -99,29 +99,26 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Deploying Machine Learning Models with Red Hat OpenShift Data Science</h1>
+<h1 class="page">Deploying Machine Learning Models with Red Hat OpenShift AI</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Welcome to this quick course on the <em>Deploying Machine Learning Models with Red Hat OpenShift Data Science</em>.
-This course is the fifth in a series of 6 courses about Red Hat OpenShift Data Science:</p>
+<p>Welcome to this quick course on the <em>Deploying Machine Learning Models with Red Hat OpenShift AI</em>.
+This course is the <strong>fourth</strong> in a series of <strong>five</strong> courses about Red Hat OpenShift AI:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://redhatquickcourses.github.io/rhods-intro">Introduction to Red Hat OpenShift Data Science</a></p>
+<p><a href="https://redhatquickcourses.github.io/rhods-intro">Introduction to Red Hat OpenShift AI</a></p>
 </li>
 <li>
-<p><a href="https://redhatquickcourses.github.io/rhods-admin">Red Hat OpenShift Data Science Administration</a></p>
-</li>
-<li>
-<p>Data Analysis and Visualization with Red Hat OpenShift Data Science (Under Development)</p>
+<p><a href="https://redhatquickcourses.github.io/rhods-admin">Red Hat OpenShift AI Administration</a></p>
 </li>
 <li>
 <p><a href="https://redhatquickcourses.github.io/rhods-model">Creating Machine Learning Models with Red Hat OpenShift Data Science</a></p>
 </li>
 <li>
-<p>Deploying Machine Learning Models with Red Hat OpenShift Data Science (<em>This course</em>)</p>
+<p>Deploying Machine Learning Models with Red Hat OpenShift AI (<em>This course</em>)</p>
 </li>
 <li>
 <p><a href="https://redhatquickcourses.github.io/rhods-pipelines">Automation using Data Science Pipelines</a></p>
@@ -170,10 +167,10 @@ After you have completed all the courses in the learning path, you can attempt t
 <h2 id="_classroom_environment"><a class="anchor" href="#_classroom_environment"></a>Classroom Environment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are two options, based on whether you are taking this course standalone (just this course), or as part of the full 6 course learning path where you installed RHODS on an OpenShift cluster in the second course in the learning path, <em>Red Hat OpenShift Data Science Administration</em>.</p>
+<p>There are two options, based on whether you are taking this course standalone (just this course), or as part of the full five course learning path where you installed RHOAI on an OpenShift cluster in the second course in the learning path, <em>Red Hat OpenShift AI Administration</em>.</p>
 </div>
 <div class="sect2">
-<h3 id="_option_1_standalone_rhods_pre_installed_on_openshift"><a class="anchor" href="#_option_1_standalone_rhods_pre_installed_on_openshift"></a>Option 1: Standalone (RHODS Pre-installed on OpenShift)</h3>
+<h3 id="_option_1_standalone_rhoai_pre_installed_on_openshift"><a class="anchor" href="#_option_1_standalone_rhoai_pre_installed_on_openshift"></a>Option 1: Standalone (RHOAI Pre-installed on OpenShift)</h3>
 <div class="paragraph">
 <p>You will use the <a href="https://demo.redhat.com/catalog?search=openshift+data+science&amp;item=babylon-catalog-prod%2Fsandboxes-gpte.ocp4-workshop-rhods-base-aws.prod">Base RHODS on AWS</a> catalog item in the Red Hat Demo Platform (RHDP) to run the hands on exercises in this course.</p>
 </div>
@@ -182,9 +179,9 @@ After you have completed all the courses in the learning path, you can attempt t
 </div>
 </div>
 <div class="sect2">
-<h3 id="_option_2_six_course_learning_path"><a class="anchor" href="#_option_2_six_course_learning_path"></a>Option 2: Six Course Learning Path</h3>
+<h3 id="_option_2_five_course_learning_path"><a class="anchor" href="#_option_2_five_course_learning_path"></a>Option 2: Five Course Learning Path</h3>
 <div class="paragraph">
-<p>Continue using the <a href="https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&amp;item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod">Red Hat OpenShift Container Platform 4.13 Workshop</a> catalog item from the <em>Red Hat OpenShift Data Science Administration</em> course.</p>
+<p>Continue using the <a href="https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&amp;item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod">Red Hat OpenShift Container Platform 4.13 Workshop</a> catalog item from the <em>Red Hat OpenShift AI Administration</em> course.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -201,7 +198,7 @@ After you have completed all the courses in the learning path, you can attempt t
 </table>
 </div>
 <div class="paragraph">
-<p>This classroom does <strong>NOT</strong> have RHODS pre-installed. You are expected to complete the <em>Red Hat OpenShift Data Science Administration</em> course, where you install and configure a basic RHODS instance, and then continue with this course.</p>
+<p>This classroom does <strong>NOT</strong> have RHOAI pre-installed. You are expected to complete the <em>Red Hat OpenShift AI Administration</em> course, where you install and configure a basic RHOAI instance, and then continue with this course.</p>
 </div>
 </div>
 </div>
@@ -242,7 +239,7 @@ After you have completed all the courses in the learning path, you can attempt t
 <p>Deploy and serve machine learning models on OpenShift</p>
 </li>
 <li>
-<p>Model deployment with RHODS model serving</p>
+<p>Model deployment with RHOAI model serving</p>
 </li>
 <li>
 <p>Model serving authentication and authorization</p>
@@ -258,7 +255,7 @@ After you have completed all the courses in the learning path, you can attempt t
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="chapter1/index.html">Model Serving in RHODS</a></span>
+  <span class="next"><a href="chapter1/index.html">Model Serving in Red Hat OpenShift AI</a></span>
 </nav>
 </article>
   </div>

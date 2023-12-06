@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Creating a Custom Model Serving Runtime :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Creating a Custom Model Serving Runtime :: Deploying Machine Learning Models with Red Hat OpenShift AI</title>
     <link rel="prev" href="section2.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -14,7 +14,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -33,7 +33,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></h3>
+    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -46,7 +46,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Model Serving in RHODS</a>
+    <a class="nav-link" href="index.html">Model Serving in Red Hat OpenShift AI</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section1.html">Model Serving Concepts</a>
@@ -66,12 +66,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift Data Science</span>
+    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift AI</span>
     <span class="version">1.33</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1.33</a>
@@ -89,8 +89,8 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
-    <li><a href="index.html">Model Serving in RHODS</a></li>
+    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></li>
+    <li><a href="index.html">Model Serving in Red Hat OpenShift AI</a></li>
     <li><a href="section3.html">Creating a Custom Model Serving Runtime</a></li>
   </ul>
 </nav>
@@ -104,10 +104,10 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>A model-serving runtime provides integration with a specified model server and the model frameworks that it supports. By default, Red Hat OpenShift Data Science includes the OpenVINO Model Server runtime. However, if this runtime doesn’t meet your needs (it doesn’t support a particular model framework, for example), you might want to add your own, custom runtimes.</p>
+<p>A model-serving runtime provides integration with a specified model server and the model frameworks that it supports. By default, Red Hat OpenShift AI includes the OpenVINO Model Server runtime. However, if this runtime doesn’t meet your needs (it doesn’t support a particular model framework, for example), you might want to add your own, custom runtimes.</p>
 </div>
 <div class="paragraph">
-<p>As an administrator, you can use the OpenShift Data Science interface to add and enable custom model-serving runtimes. You can then choose from your enabled runtimes when you create a new model server.</p>
+<p>As an administrator, you can use the OpenShift AI interface to add and enable custom model-serving runtimes. You can then choose from your enabled runtimes when you create a new model server.</p>
 </div>
 </div>
 </div>
@@ -141,7 +141,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>While RHODS supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.</p>
+<p>While RHOAI supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.</p>
 </div>
 </td>
 </tr>
@@ -155,7 +155,7 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Log in to RHODS with a user who is part of the RHODS admin group</p>
+<p>Log in to RHOAI with a user who is part of the RHOAI admin group</p>
 </li>
 <li>
 <p>Navigate to the Settings menu, then Serving Runtimes</p>

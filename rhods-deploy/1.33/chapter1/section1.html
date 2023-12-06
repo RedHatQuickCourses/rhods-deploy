@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Model Serving Concepts :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>Model Serving Concepts :: Deploying Machine Learning Models with Red Hat OpenShift AI</title>
     <link rel="prev" href="index.html">
     <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -15,7 +15,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -34,7 +34,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></h3>
+    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -47,7 +47,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Model Serving in RHODS</a>
+    <a class="nav-link" href="index.html">Model Serving in Red Hat OpenShift AI</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section1.html">Model Serving Concepts</a>
@@ -67,12 +67,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift Data Science</span>
+    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift AI</span>
     <span class="version">1.33</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1.33</a>
@@ -90,8 +90,8 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
-    <li><a href="index.html">Model Serving in RHODS</a></li>
+    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></li>
+    <li><a href="index.html">Model Serving in Red Hat OpenShift AI</a></li>
     <li><a href="section1.html">Model Serving Concepts</a></li>
   </ul>
 </nav>
@@ -195,7 +195,7 @@ In summary, the model server runtime provides the overall environment for hostin
 <div class="sect3">
 <h4 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a model</h4>
 <div class="paragraph">
-<p>Using a RHODS instance, let us train and deploy an example.</p>
+<p>Using a RHOAI instance, let us train and deploy an example.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -349,7 +349,7 @@ Then, open the workbench to go to the JupyterLab interface.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Although we are actually serving a model with Flask in the exercise, Flask is not considered part of the Model Serving feature. This example represents one way in which some customers decide to embed their models in containers, although RHODS provides for mechanisms that can make this process of serving a model a simpler process, when provided with the proper model formats.</p>
+<p>Although we are actually serving a model with Flask in the exercise, Flask is not considered part of the Model Serving feature. This example represents one way in which some customers decide to embed their models in containers, although RHOAI provides for mechanisms that can make this process of serving a model a simpler process, when provided with the proper model formats.</p>
 </div>
 </td>
 </tr>
@@ -574,11 +574,11 @@ curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase
 <div class="sect2">
 <h3 id="_rhoai_model_serving_runtimes"><a class="anchor" href="#_rhoai_model_serving_runtimes"></a>RHOAI Model Serving Runtimes</h3>
 <div class="paragraph">
-<p>In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.</p>
+<p>In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumption. In our example we used Flask.</p>
 </div>
 <div class="paragraph">
-<p>However, in OpenShift AI, you do not need to manually create serving runtimes.
-By default, OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
+<p>However, in Red Hat OpenShift AI, you do not need to manually create serving runtimes.
+By default, Red Hat OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
 OpenVINO supports various model formats, such as the following ones:</p>
 </div>
 <div class="ulist">
@@ -587,7 +587,7 @@ OpenVINO supports various model formats, such as the following ones:</p>
 <p><a href="https://onnx.ai">ONNX</a>: An open standard for machine learning interoperability.</p>
 </li>
 <li>
-<p><a href="https://docs.openvino.ai/latest/openvino_ir.html">OpenVino IR</a>: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.</p>
+<p><a href="https://docs.openvino.ai/latest/openvino_ir.html">OpenVino IR</a>: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.</p>
 </li>
 </ul>
 </div>
@@ -597,7 +597,7 @@ OpenVINO supports various model formats, such as the following ones:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Export the model in a format compatible with one of the available RHODS runtimes.</p>
+<p>Export the model in a format compatible with one of the available RHOAI runtimes.</p>
 </li>
 <li>
 <p>Upload the model to an S3</p>
@@ -620,7 +620,7 @@ OpenVINO supports various model formats, such as the following ones:</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Model Serving in RHODS</a></span>
+  <span class="prev"><a href="index.html">Model Serving in Red Hat OpenShift AI</a></span>
   <span class="next"><a href="section2.html">OpenVINO Model Serving</a></span>
 </nav>
 </article>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>OpenVINO Model Serving :: Deploying Machine Learning Models with Red Hat OpenShift Data Science</title>
+    <title>OpenVINO Model Serving :: Deploying Machine Learning Models with Red Hat OpenShift AI</title>
     <link rel="prev" href="section1.html">
     <link rel="next" href="section3.html">
     <meta name="generator" content="Antora 3.1.3">
@@ -15,7 +15,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -34,7 +34,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></h3>
+    <h3 class="title"><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -47,7 +47,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Model Serving in RHODS</a>
+    <a class="nav-link" href="index.html">Model Serving in Red Hat OpenShift AI</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section1.html">Model Serving Concepts</a>
@@ -67,12 +67,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift Data Science</span>
+    <span class="title">Deploying Machine Learning Models with Red Hat OpenShift AI</span>
     <span class="version">1.33</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a>
+      <a class="title" href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1.33</a>
@@ -90,8 +90,8 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift Data Science</a></li>
-    <li><a href="index.html">Model Serving in RHODS</a></li>
+    <li><a href="../index.html">Deploying Machine Learning Models with Red Hat OpenShift AI</a></li>
+    <li><a href="index.html">Model Serving in Red Hat OpenShift AI</a></li>
     <li><a href="section2.html">OpenVINO Model Serving</a></li>
   </ul>
 </nav>
@@ -162,7 +162,7 @@ oc apply -f ./minio.yml -n object-datastore</code></pre>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>Use this route as the S3 API endpoint. Basically, this is the URL that we will use when creating a data connection to the S3 in RHODS.</p>
+<p>Use this route as the S3 API endpoint. Basically, this is the URL that we will use when creating a data connection to the S3 in RHOAI.</p>
 </div>
 </div>
 </div>
@@ -180,7 +180,7 @@ oc apply -f ./minio.yml -n object-datastore</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Using a JupyterLab workbench at RHODS, import the repository: <a href="https://github.com/RedHatQuickCourses/rhods-qc-apps.git" class="bare">https://github.com/RedHatQuickCourses/rhods-qc-apps.git</a></p>
+<p>Using a JupyterLab workbench at RHOAI, import the repository: <a href="https://github.com/RedHatQuickCourses/rhods-qc-apps.git" class="bare">https://github.com/RedHatQuickCourses/rhods-qc-apps.git</a></p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -271,7 +271,7 @@ Alternatively, you can create a custom notebook image that includes the <code>sk
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>In RHODS dashboard, create a project named <strong>iris-project</strong>.</p>
+<p>In the RHOAI dashboard, create a project named <strong>iris-project</strong>.</p>
 </li>
 <li>
 <p>In the <strong>Data Connections</strong> section, create a Data Connection to your S3</p>
