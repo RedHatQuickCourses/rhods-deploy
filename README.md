@@ -1,6 +1,6 @@
 # Deploying Machine Learning Models with Red Hat OpenShift Data Science
 
-This course is the fifth in a series of 6 courses about Red Hat OpenShift Data Science (RHODS). This course teaches you how to deploy machine learning models in RHODS, and how to consume them from client applications.
+This course is the fourth in a series of five courses about Red Hat OpenShift AI (RHOAI). This course teaches you how to deploy machine learning models in RHOAI, and how to consume them from client applications.
 
 # Creating Course Content
 

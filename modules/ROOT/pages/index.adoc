@@ -1,15 +1,14 @@
-= Deploying Machine Learning Models with Red Hat OpenShift Data Science
+= Deploying Machine Learning Models with Red Hat OpenShift AI
 :navtitle: Home
 
-Welcome to this quick course on the _Deploying Machine Learning Models with Red Hat OpenShift Data Science_.
-This course is the fifth in a series of 6 courses about Red Hat OpenShift Data Science:
+Welcome to this quick course on the _Deploying Machine Learning Models with Red Hat OpenShift AI_.
+This course is the *fourth* in a series of *five* courses about Red Hat OpenShift AI:
 
-1. https://redhatquickcourses.github.io/rhods-intro[Introduction to Red Hat OpenShift Data Science]
-2. https://redhatquickcourses.github.io/rhods-admin[Red Hat OpenShift Data Science Administration]
-3. Data Analysis and Visualization with Red Hat OpenShift Data Science (Under Development)
-4. https://redhatquickcourses.github.io/rhods-model[Creating Machine Learning Models with Red Hat OpenShift Data Science]
-5. Deploying Machine Learning Models with Red Hat OpenShift Data Science (_This course_)
-6. https://redhatquickcourses.github.io/rhods-pipelines[Automation using Data Science Pipelines]
+1. https://redhatquickcourses.github.io/rhods-intro[Introduction to Red Hat OpenShift AI]
+2. https://redhatquickcourses.github.io/rhods-admin[Red Hat OpenShift AI Administration]
+3. https://redhatquickcourses.github.io/rhods-model[Creating Machine Learning Models with Red Hat OpenShift Data Science]
+4. Deploying Machine Learning Models with Red Hat OpenShift AI (_This course_)
+5. https://redhatquickcourses.github.io/rhods-pipelines[Automation using Data Science Pipelines]
 
 NOTE: After you have completed all the courses in the learning path, you can attempt the https://github.com/RedHatQuickCourses/rhods-qc-apps/tree/main/7.hands-on-lab["Hit the RHODS"] exercise, that tests your understanding of the concepts taught in all the courses.
 
@@ -24,24 +23,24 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment
 
-There are two options, based on whether you are taking this course standalone (just this course), or as part of the full 6 course learning path where you installed RHODS on an OpenShift cluster in the second course in the learning path, _Red Hat OpenShift Data Science Administration_.
+There are two options, based on whether you are taking this course standalone (just this course), or as part of the full five course learning path where you installed RHOAI on an OpenShift cluster in the second course in the learning path, _Red Hat OpenShift AI Administration_.
 
-=== Option 1: Standalone (RHODS Pre-installed on OpenShift)
+=== Option 1: Standalone (RHOAI Pre-installed on OpenShift)
 
 You will use the https://demo.redhat.com/catalog?search=openshift+data+science&item=babylon-catalog-prod%2Fsandboxes-gpte.ocp4-workshop-rhods-base-aws.prod[Base RHODS on AWS] catalog item in the Red Hat Demo Platform (RHDP) to run the hands on exercises in this course.
 
 This classroom has a pre-installed version of Red Hat OpenShift Data Science on OpenShift. 
 
-=== Option 2: Six Course Learning Path
+=== Option 2: Five Course Learning Path
 
-Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod[Red Hat OpenShift Container Platform 4.13 Workshop] catalog item from the _Red Hat OpenShift Data Science Administration_ course.
+Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod[Red Hat OpenShift Container Platform 4.13 Workshop] catalog item from the _Red Hat OpenShift AI Administration_ course.
 
 [TIP]
 ====
 To prevent problems when allocating the workbench pods, make sure that your catalog item has been configured with `64Gi` as the worker memory size.
 ====
 
-This classroom does *NOT* have RHODS pre-installed. You are expected to complete the _Red Hat OpenShift Data Science Administration_ course, where you install and configure a basic RHODS instance, and then continue with this course.
+This classroom does *NOT* have RHOAI pre-installed. You are expected to complete the _Red Hat OpenShift AI Administration_ course, where you install and configure a basic RHOAI instance, and then continue with this course.
 
 == Prerequisites
 
@@ -56,7 +55,7 @@ This classroom does *NOT* have RHODS pre-installed. You are expected to complete
 The overall objectives of this course include:
 
 * Deploy and serve machine learning models on OpenShift
-* Model deployment with RHODS model serving
+* Model deployment with RHOAI model serving
 * Model serving authentication and authorization
 * Troubleshoot deployed models
 * Send inference requests to deployed models via REST API calls

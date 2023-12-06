@@ -1,8 +1,8 @@
 = Creating a Custom Model Serving Runtime
 
-A model-serving runtime provides integration with a specified model server and the model frameworks that it supports. By default, Red Hat OpenShift Data Science includes the OpenVINO Model Server runtime. However, if this runtime doesn’t meet your needs (it doesn’t support a particular model framework, for example), you might want to add your own, custom runtimes.
+A model-serving runtime provides integration with a specified model server and the model frameworks that it supports. By default, Red Hat OpenShift AI includes the OpenVINO Model Server runtime. However, if this runtime doesn’t meet your needs (it doesn’t support a particular model framework, for example), you might want to add your own, custom runtimes.
 
-As an administrator, you can use the OpenShift Data Science interface to add and enable custom model-serving runtimes. You can then choose from your enabled runtimes when you create a new model server.
+As an administrator, you can use the OpenShift AI interface to add and enable custom model-serving runtimes. You can then choose from your enabled runtimes when you create a new model server.
 
 == Prerequisite
 
@@ -16,12 +16,12 @@ This exercise will guide you through the broad steps necessary to deploy a custo
 
 [NOTE]
 ====
-While RHODS supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
+While RHOAI supports the ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
 ====
 
 == Adding The Custom Runtime
 
-. Log in to RHODS with a user who is part of the RHODS admin group
+. Log in to RHOAI with a user who is part of the RHOAI admin group
 
 . Navigate to the Settings menu, then Serving Runtimes
 +

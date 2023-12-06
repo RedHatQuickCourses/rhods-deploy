@@ -40,13 +40,13 @@ oc get routes -n object-datastore | grep minio-api | awk '{print $2}'
 +
 [INFO]
 ====
-Use this route as the S3 API endpoint. Basically, this is the URL that we will use when creating a data connection to the S3 in RHODS.
+Use this route as the S3 API endpoint. Basically, this is the URL that we will use when creating a data connection to the S3 in RHOAI.
 ==== 
 
 == Training The Model
 We will use the iris dataset model for this excercise.
 
-. Using a JupyterLab workbench at RHODS, import the repository: https://github.com/RedHatQuickCourses/rhods-qc-apps.git
+. Using a JupyterLab workbench at RHOAI, import the repository: https://github.com/RedHatQuickCourses/rhods-qc-apps.git
 +
 [TIP]
 ====
@@ -83,7 +83,7 @@ Make sure to create a new path in your bucket, and upload to such path, not to r
 
 == Create A Data Connection
 
-. In RHODS dashboard, create a project named **iris-project**.
+. In the RHOAI dashboard, create a project named **iris-project**.
 
 . In the **Data Connections** section, create a Data Connection to your S3
 +

@@ -1,5 +1,5 @@
 site:
-  title: Deploying Machine Learning Models with Red Hat OpenShift Data Science
+  title: Deploying Machine Learning Models with Red Hat OpenShift AI
   start_page: rhods-deploy::index.adoc
 
 content:

@@ -1,4 +1,4 @@
-= Model Serving in RHODS
+= Model Serving in Red Hat OpenShift AI
 
 == Introduction
 

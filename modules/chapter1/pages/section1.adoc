@@ -61,7 +61,7 @@ When deploying machine learning models, we need to deploy a container that serve
 
 ==== Train a model
 
-Using a RHODS instance, let us train and deploy an example.
+Using a RHOAI instance, let us train and deploy an example.
 
 . In a data science project, create a `Standard Data Science`workbench.
 Then, open the workbench to go to the JupyterLab interface.
@@ -133,7 +133,7 @@ The pickle model that we previously exported can be used in a Flask application.
 
 [IMPORTANT]
 ====
-Although we are actually serving a model with Flask in the exercise, Flask is not considered part of the Model Serving feature. This example represents one way in which some customers decide to embed their models in containers, although RHODS provides for mechanisms that can make this process of serving a model a simpler process, when provided with the proper model formats.
+Although we are actually serving a model with Flask in the exercise, Flask is not considered part of the Model Serving feature. This example represents one way in which some customers decide to embed their models in containers, although RHOAI provides for mechanisms that can make this process of serving a model a simpler process, when provided with the proper model formats.
 ====
 
 . In your computer, create a new directory to save the source code of the web application.
@@ -300,18 +300,18 @@ There are automated and faster ways to perform these steps. In the following sec
 
 === RHOAI Model Serving Runtimes
 
-In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumtion. In our example we used Flask.
+In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumption. In our example we used Flask.
 
-However, in OpenShift AI, you do not need to manually create serving runtimes.
-By default, OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
+However, in Red Hat OpenShift AI, you do not need to manually create serving runtimes.
+By default, Red Hat OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
 OpenVINO supports various model formats, such as the following ones:
 
 - https://onnx.ai[ONNX]: An open standard for machine learning interoperability.
-- https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift Data Science.
+- https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.
 
 In order to leverage the benefits of OpenVINO, you must:
 
-. Export the model in a format compatible with one of the available RHODS runtimes.
+. Export the model in a format compatible with one of the available RHOAI runtimes.
 . Upload the model to an S3
 . Create a Data Connection to the S3 containing the model
 . Create or use one of the available serving runtimes in a Model Server configuration that specifies the size and resources to use while setting up an inference engine.
