@@ -67,6 +67,16 @@ Alternatively, you can create a custom notebook image that includes the `skl2onn
 . Open and run the notebook **iris_to_onnx** from **rhods-qc-apps/4.rhods-deploy/chapter2** directory
 +
 image::iris_training_onnx.png[iris training to onnx format]
++
+[NOTE]
+====
+Converting a model to ONNX format depends on the library that you use to create the model.
+In this case, the model is created with Scikit-Learn, so you must use the https://onnx.ai/sklearn-onnx/[sklearn-onnx] library to perform the conversion.
+
+To convert from PyTorch, see https://pytorch.org/tutorials/beginner/onnx/intro_onnx.html[Introduction to ONNX in the PyTorch docs].
+
+To convert from TensorFlow, use the https://github.com/onnx/tensorflow-onnx[tf2onnx] library.
+====
 
 . Observe that a file has been created: `rf_iris.onnx`, download this file to your computer, so that we can upload it to S3.
 +
