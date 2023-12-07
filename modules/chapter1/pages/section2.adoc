@@ -67,6 +67,16 @@ Alternatively, you can create a custom notebook image that includes the `skl2onn
 . Open and run the notebook **iris_to_onnx** from **rhods-qc-apps/4.rhods-deploy/chapter2** directory
 +
 image::iris_training_onnx.png[iris training to onnx format]
++
+[NOTE]
+====
+Converting a model to ONNX format depends on the library that you use to create the model.
+In this case, the model is created with Scikit-Learn, so you must use the https://onnx.ai/sklearn-onnx/[sklearn-onnx] library to perform the conversion.
+
+To convert from PyTorch, see https://pytorch.org/tutorials/beginner/onnx/intro_onnx.html[Introduction to ONNX in the PyTorch docs].
+
+To convert from TensorFlow, use the https://github.com/onnx/tensorflow-onnx[tf2onnx] library.
+====
 
 . Observe that a file has been created: `rf_iris.onnx`, download this file to your computer, so that we can upload it to S3.
 +
@@ -96,6 +106,52 @@ image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 - The region is not important when using MinIO, this is a property that has effects when using AWS S3.
 - Mind typos for the bucket name.
 - You don't have to select a workbench to attach this data connection to.
+====
+
+
+== Using `boto3`
+
+Although the previous section indicates that you should manually download the `rf_iris.onnx` file to your computer and upload it to S3, you can also upload your model directly from your notebook or Python file, by using the `boto3` library.
+To use this approach, you must:
+
+* Have the `boto3` library installed in your workbench (most of the RHOAI notebook images include this library).
+* Attach your data connection to the workbench.
+
+After training the model, you can upload the file as the following example demostrates:
+
+[source,python]
+----
+import os
+import boto3
+
+source_path = "model.onnx"
+s3_destination_path = "models/model.onnx"
+
+key_id = os.getenv("AWS_ACCESS_KEY_ID")
+secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+endpoint = os.getenv("AWS_S3_ENDPOINT")
+bucket_name = os.getenv("AWS_S3_BUCKET")
+
+s3 = boto3.client(
+   "s3",
+   aws_access_key_id=key_id,
+   aws_secret_access_key=secret_key,
+   endpoint_url=endpoint,
+   use_ssl=True)
+
+s3.upload_file(source_path, bucket_name, Key=s3_destination_path)
+----
+
+[NOTE]
+====
+You can also use the `boto3` library to download data.
+This can be helpful in the data collection stage, for example for gathering data files from S3.
+
+[source,python]
+----
+s3_data_path = "dataset.csv"
+s3.download_file(bucket_name, s3_data_path, "my/local/path/dataset.csv")
+----
 ====
 
 == Create a Model Server
@@ -165,7 +221,7 @@ image::iris-project-events.png[Iris project events]
 Deploying a **Model Server** triggers a **ReplicaSet** with **ModelMesh**, which attach your model to the inference runtime, and exposes it through a route. Also, notice the creation of a secret with your token.
 ====
 
-== Test The Model With CURL
+== Test The Model
 
 Now that the model is ready to use, we can make an inference using the REST API
 
@@ -191,3 +247,61 @@ The result of using the inference service looks like the following output:
 ```json
 {"model_name":"iris-model__isvc-590b5324f9","model_version":"1","outputs":[{"name":"label","datatype":"INT64","shape":[1],"data":[1]},{"name":"scores","datatype":"FP32","shape":[1,3],"data":[4.851966,3.1275764,3.4580243]}]}
 ```
+
+=== Model Serving Request Body
+
+As you tested with the preceding `curl` command, to make HTTP requests to a deployed model you must use a specific request body format.
+The basic format of the input data is as follows:
+
+[subs=+quotes]
+----
+{
+  "inputs": [{
+    "name" : "input", <1>
+    "shape" : [2,3], <2>
+    "datatype"  : "INT64", <3>
+    "data" : [[34, 54, 65], [4, 12, 21]] <4>
+  }]
+}
+----
+<1> The name of the input tensor.
+The data scientist that creates the model must provide you with this value.
+<2> The shape of the input tensor.
+<3> The https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/required_api.md#tensor-data-types[data type] of the input tensor.
+<4> The tensor contents provided as a JSON array.
+
+The API supports additional parameters.
+For a complete list, refer to the https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/required_api.md#inference-request-json-object[Kserve Predict Protocol docs].
+
+To make a request in Python, you can use the `requests` library, as the following example shows:
+
+[source,python]
+----
+import requests
+
+input_data = [-0.15384616, -0.9909186]
+
+# You must adjust this path or read it from an environment variable
+INFERENCE_ENDPOINT = "https://my-model.apps.my-cluster.example.com/v2/models/my-model/infer"
+
+# Build the request body
+payload = {
+    "inputs": [
+        {
+            "name": "dense_input",
+            "shape": [1, 2],
+            "datatype": "FP32",
+            "data": input_data
+        }
+    ]
+}
+
+# Send the POST request
+response = requests.post(INFERENCE_ENDPOINT, json=payload)
+
+# Parse the JSON response
+result = response.json()
+
+# Print predicted values
+print(result['outputs'][0]['data'])
+----
