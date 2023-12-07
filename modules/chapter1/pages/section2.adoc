@@ -281,6 +281,9 @@ import requests
 
 input_data = [-0.15384616, -0.9909186]
 
+# You must adjust this path or read it from an environment variable
+INFERENCE_ENDPOINT = "https://my-model.apps.my-cluster.example.com/v2/models/my-model/infer"
+
 # Build the request body
 payload = {
     "inputs": [
