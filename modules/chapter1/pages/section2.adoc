@@ -108,6 +108,52 @@ image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 - You don't have to select a workbench to attach this data connection to.
 ====
 
+
+== Using `boto3`
+
+Although the previous section indicates that you should manually download the `rf_iris.onnx` file to your computer and upload it to S3, you can also upload your model directly from your notebook or Python file, by using the `boto3` library.
+To use this approach, you must:
+
+* Have the `boto3` library installed in your workbench (most of the RHOAI notebook images include this library).
+* Attach your data connection to the workbench.
+
+After training the model, you can upload the file as the following example demostrates:
+
+[source,python]
+----
+import os
+import boto3
+
+source_path = "model.onnx"
+s3_destination_path = "models/model.onnx"
+
+key_id = os.getenv("AWS_ACCESS_KEY_ID")
+secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+endpoint = os.getenv("AWS_S3_ENDPOINT")
+bucket_name = os.getenv("AWS_S3_BUCKET")
+
+s3 = boto3.client(
+   "s3",
+   aws_access_key_id=key_id,
+   aws_secret_access_key=secret_key,
+   endpoint_url=endpoint,
+   use_ssl=True)
+
+s3.upload_file(source_path, bucket_name, Key=s3_destination_path)
+----
+
+[NOTE]
+====
+You can also use the `boto3` library to download data.
+This can be helpful in the data collection stage, for example for gathering data files from S3.
+
+[source,python]
+----
+s3_data_path = "dataset.csv"
+s3.download_file(bucket_name, s3_data_path, "my/local/path/dataset.csv")
+----
+====
+
 == Create a Model Server
 
 . In the **Models and model servers** section, add a server.
