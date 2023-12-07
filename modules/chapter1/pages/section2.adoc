@@ -267,7 +267,7 @@ The basic format of the input data is as follows:
 <1> The name of the input tensor.
 The data scientist that creates the model must provide you with this value.
 <2> The shape of the input tensor.
-<3> The [data type] of the input tensor.
+<3> The https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/required_api.md#tensor-data-types[data type] of the input tensor.
 <4> The tensor contents provided as a JSON array.
 
 The API supports additional parameters.
