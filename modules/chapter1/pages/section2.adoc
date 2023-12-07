@@ -255,14 +255,14 @@ The basic format of the input data is as follows:
 
 [subs=+quotes]
 ----
-{[
-  {
+{
+  "inputs": [{
     "name" : "input", <1>
     "shape" : [2,3], <2>
     "datatype"  : "INT64", <3>
     "data" : [[34, 54, 65], [4, 12, 21]] <4>
-  }
-]}
+  }]
+}
 ----
 <1> The name of the input tensor.
 The data scientist that creates the model must provide you with this value.
