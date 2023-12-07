@@ -221,7 +221,7 @@ image::iris-project-events.png[Iris project events]
 Deploying a **Model Server** triggers a **ReplicaSet** with **ModelMesh**, which attach your model to the inference runtime, and exposes it through a route. Also, notice the creation of a secret with your token.
 ====
 
-== Test The Model With CURL
+== Test The Model
 
 Now that the model is ready to use, we can make an inference using the REST API
 
@@ -247,3 +247,58 @@ The result of using the inference service looks like the following output:
 ```json
 {"model_name":"iris-model__isvc-590b5324f9","model_version":"1","outputs":[{"name":"label","datatype":"INT64","shape":[1],"data":[1]},{"name":"scores","datatype":"FP32","shape":[1,3],"data":[4.851966,3.1275764,3.4580243]}]}
 ```
+
+=== Model Serving Request Body
+
+As you tested with the preceding `curl` command, to make HTTP requests to a deployed model you must use a specific request body format.
+The basic format of the input data is as follows:
+
+[subs=+quotes]
+----
+{[
+  {
+    "name" : "input", <1>
+    "shape" : [1,3], <2>
+    "datatype"  : "INT64", <3>
+    "data" : [[34,54,65]] <4>
+  }
+]}
+----
+<1> The name of the input tensor.
+The data scientist that creates the model must provide you with this value.
+<2> The shape of the input tensor.
+<3> The [data type] of the input tensor.
+<4> The tensor contents provided as a JSON array.
+
+The API supports additional parameters.
+For a complete list, refer to the https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/required_api.md#inference-request-json-object[Kserve Predict Protocol docs].
+
+To make a request in Python, you can use the `requests` library, as the following example shows:
+
+[source,python]
+----
+import requests
+
+input_data = [-0.15384616, -0.9909186]
+
+# Build the request body
+payload = {
+    "inputs": [
+        {
+            "name": "dense_input",
+            "shape": [1, 2],
+            "datatype": "FP32",
+            "data": input_data
+        }
+    ]
+}
+
+# Send the POST request
+response = requests.post(INFERENCE_ENDPOINT, json=payload)
+
+# Parse the JSON response
+result = response.json()
+
+# Print predicted values
+print(result['outputs'][0]['data'])
+----
