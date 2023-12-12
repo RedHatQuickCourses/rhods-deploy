@@ -137,7 +137,15 @@ image::runtimes-list.png[Runtimes List]
 +
 image::add-custom-model-server.png[Add server]
 
-. Fill up the form as in the following example, notice how **Triton runtime 23.05** is one of the available options for the **Serving runtime** dropdown.
+. Create the model server with the following values:
++
+--
+* Server name: `iris-custom-server`.
+* Serving runtime: `Triton runtime 23.05`.
+This is the newly added runtime.
+* Activate the external route and the authentication.
+Use `custom-server-sa` as the service account name.
+--
 +
 image:custom-model-server-form.png[Add model server form]
 
@@ -151,7 +159,14 @@ image::custom-runtime.png[Iris custom server]
 +
 image::iris-custom-deploy-model.png[Deploy Model]
 
-. Fill up the **Deploy Model** form as in the following example:
+. Fill up the **Deploy Model** form:
++
+--
+* Model name: `iris-custom-model`
+* Model framework: `onnx - 1`
+* Model location data connection: `iris-data-connection`
+* Model location path: `iris`
+--
 +
 image::iris-custom-deploy-model-form.png[Deploy model form]
 +

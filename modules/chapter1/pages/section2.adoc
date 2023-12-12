@@ -100,7 +100,7 @@ Make sure to create a new path in your bucket, and upload to such path, not to r
 
 . In the RHOAI dashboard, create a project named **iris-project**.
 
-. In the **Data Connections** section, create a Data Connection to your S3
+. In the **Data Connections** section, create a Data Connection to your S3.
 +
 image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 +
@@ -109,6 +109,7 @@ image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 - The credentials (Access Key/Secret Key) are `minio`/`minio123`.
 - Make sure to use the API route, not the UI route (`oc get routes -n object-datastore | grep minio-api | awk '{print $2}'`).
 - The region is not important when using MinIO, this is a property that has effects when using AWS S3.
+However, you must enter a non-empty value to prevent problems with model serving.
 - Mind typos for the bucket name.
 - You don't have to select a workbench to attach this data connection to.
 ====
@@ -165,7 +166,14 @@ s3.download_file(bucket_name, s3_data_path, "my/local/path/dataset.csv")
 +
 image::add-server-button.png[add server]
 
-. Fill the form with the example values:
+. Fill the form with the following values:
++
+--
+* Server name: `iris-model-server`.
+* Serving runtime: `OpenVINO Model Server`.
+* Select the checkboxes to expose the models through an external route, and to enable token authentication.
+Enter `iris-serviceaccount` as the service account name.
+--
 +
 image::add-server-form-example.png[Add Server Form]
 +
@@ -203,7 +211,14 @@ image::model-server-with-token.png[Model Server with token]
 +
 image::deploy-model-button.png[Deploy Model button]
 
-. Fill the **Deploy Model** from as in the example:
+. Fill the **Deploy Model** form.
++
+--
+* Model name: `iris-model`
+* Model framework: `onnx - 1`
+* Model location data connection: `iris-data-connection`
+* Model location path: `iris`
+--
 +
 image::deploy-model-form.png[Deploy Model form]
 
