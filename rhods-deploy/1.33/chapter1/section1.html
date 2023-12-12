@@ -175,7 +175,7 @@ Popular tools and frameworks for model serving include TensorFlow Serving, Flask
 <p>The model server runtime can be a part of a larger deployment framework or service that includes features such as scalability, versioning, monitoring, and security. Examples of model server runtimes include TensorFlow Serving, TorchServe, and ONNX Runtime. These runtimes support the deployment of models trained using popular machine learning frameworks and provide a standardized way to serve predictions over APIs (Application Programming Interfaces).</p>
 </div>
 <div class="sect2">
-<h3 id="_inference_engine"><a class="anchor" href="#_inference_engine"></a>Inference Engine:</h3>
+<h3 id="_inference_engine"><a class="anchor" href="#_inference_engine"></a>Inference Engine</h3>
 <div class="paragraph">
 <p>An inference engine is a component responsible for executing the forward pass of a machine learning model to generate predictions based on input data. It is a crucial part of the model server runtime and is specifically designed for performing inference tasks efficiently. The inference engine takes care of optimizations, such as hardware acceleration and parallelization, to ensure that predictions are made quickly and with minimal resource utilization.</p>
 </div>
@@ -187,20 +187,23 @@ Popular tools and frameworks for model serving include TensorFlow Serving, Flask
 In summary, the model server runtime provides the overall environment for hosting and managing machine learning models in production, while the inference engine is responsible for the actual computation of predictions during inference. The two work together to deliver a scalable, efficient, and reliable solution for serving machine learning models in real-world applications. The choice of model server runtime and inference engine depends on factors such as the machine learning framework used, deployment requirements, and the specific optimizations needed for the target hardware.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_unravel_the_runtime"><a class="anchor" href="#_unravel_the_runtime"></a>Unravel The Runtime</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_unravel_the_runtime"><a class="anchor" href="#_unravel_the_runtime"></a>Unravel The Runtime</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>When deploying machine learning models, we need to deploy a container that serves a <strong>Runtime</strong> and uses a <strong>Model</strong> to perform predictions, consider the following example:</p>
 </div>
-<div class="sect3">
-<h4 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a model</h4>
+<div class="sect2">
+<h3 id="_train_a_model"><a class="anchor" href="#_train_a_model"></a>Train a Model</h3>
 <div class="paragraph">
 <p>Using a RHOAI instance, let us train and deploy an example.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>In a data science project, create a `Standard Data Science`workbench.
+<p>In a data science project, create a <code>Standard Data Science</code> workbench.
 Then, open the workbench to go to the JupyterLab interface.</p>
 <div class="imageblock">
 <div class="content">
@@ -275,14 +278,15 @@ Then, open the workbench to go to the JupyterLab interface.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>The use of either of those formats depend on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.</p>
+<p>The use of either of those formats depends on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_use_the_model_in_another_notebook"><a class="anchor" href="#_use_the_model_in_another_notebook"></a>Use the model in another notebook</h5>
+</div>
+<div class="sect2">
+<h3 id="_use_the_model_in_another_notebook"><a class="anchor" href="#_use_the_model_in_another_notebook"></a>Use the Model in Another Notebook</h3>
 <div class="paragraph">
 <p>The model can be deserialized in another notebook, and used to generate a prediction:</p>
 </div>
@@ -328,8 +332,6 @@ Then, open the workbench to go to the JupyterLab interface.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="_use_the_model_in_a_container"><a class="anchor" href="#_use_the_model_in_a_container"></a>Use the Model in a Container</h2>
 <div class="sectionbody">
@@ -337,7 +339,7 @@ Then, open the workbench to go to the JupyterLab interface.</p>
 <p>For this section, you need Podman to create an image, and a registry to upload the resulting image.</p>
 </div>
 <div class="sect2">
-<h3 id="_web_application_that_uses_the_model"><a class="anchor" href="#_web_application_that_uses_the_model"></a>web application that uses the model</h3>
+<h3 id="_web_application_that_uses_the_model"><a class="anchor" href="#_web_application_that_uses_the_model"></a>Web application that uses the model</h3>
 <div class="paragraph">
 <p>The pickle model that we previously exported can be used in a Flask application. In this section we present an example Flask application that uses the model.</p>
 </div>
@@ -495,10 +497,10 @@ CMD ["app:app"]</code></pre>
 <p>Build and push the image to an image registry</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">podman login quay.io
-podman build -t purchase-predictor:1.0 .
-podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
-podman push quay.io/user_name/purchase-predictor:1.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ podman login quay.io
+$ podman build -t purchase-predictor:1.0 .
+$ podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
+$ podman push quay.io/user_name/purchase-predictor:1.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -509,10 +511,10 @@ podman push quay.io/user_name/purchase-predictor:1.0</code></pre>
 <p>Deploy the model image to <strong>OpenShift</strong></p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc login api.cluster.example.com:6443
-oc new-project model-deploy
-oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
-oc expose service purchase-predictor</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc login api.cluster.example.com:6443
+$ oc new-project model-deploy
+$ oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
+$ oc expose service purchase-predictor</code></pre>
 </div>
 </div>
 </li>
@@ -523,11 +525,13 @@ oc expose service purchase-predictor</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
-ok%
-curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
+ok
+$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
 {"name":"Time to purchase amount predictor","version":"v1.0.0"}
-curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
+$ curl -d '{"time":4}' -H "Content-Type: application/json" \
+&gt; -X POST \
+&gt; http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
 {"prediction":34,"status":200}</code></pre>
 </div>
 </div>

@@ -121,27 +121,27 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>In OpenShift, create a new namespace with the name <strong>object-datastore</strong></p>
+<p>In OpenShift, create a new namespace with the name <strong>object-datastore</strong>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc new-project object-datastore</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc new-project object-datastore</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Run the following yaml to install MinIO</p>
+<p>Run the following yaml to install MinIO:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
-oc apply -f ./minio.yml -n object-datastore</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
+$ oc apply -f ./minio.yml -n object-datastore</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Get the route to the MinIO dashboard</p>
+<p>Get the route to the MinIO dashboard.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc get routes -n object-datastore | grep minio-ui | awk '{print $2}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc get routes -n object-datastore | grep minio-ui | awk '{print $2}'</code></pre>
 </div>
 </div>
 <div class="exampleblock">
@@ -153,10 +153,10 @@ oc apply -f ./minio.yml -n object-datastore</code></pre>
 </div>
 </li>
 <li>
-<p>Get the route to the MinIO API</p>
+<p>Get the route to the MinIO API.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc get routes -n object-datastore | grep minio-api | awk '{print $2}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc get routes -n object-datastore | grep minio-api | awk '{print $2}'</code></pre>
 </div>
 </div>
 <div class="exampleblock">
@@ -200,7 +200,7 @@ oc apply -f ./minio.yml -n object-datastore</code></pre>
 <p>Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">  pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter2/requirements.txt</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter2/requirements.txt</code></pre>
 </div>
 </div>
 </li>
@@ -295,7 +295,7 @@ In this case, the model is created with Scikit-Learn, so you must use the <a hre
 <p>In the RHOAI dashboard, create a project named <strong>iris-project</strong>.</p>
 </li>
 <li>
-<p>In the <strong>Data Connections</strong> section, create a Data Connection to your S3</p>
+<p>In the <strong>Data Connections</strong> section, create a Data Connection to your S3.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/add-minio-iris-data-connection.png" alt="Add iris data connection from minio">
@@ -317,7 +317,8 @@ In this case, the model is created with Scikit-Learn, so you must use the <a hre
 <p>Make sure to use the API route, not the UI route (<code>oc get routes -n object-datastore | grep minio-api | awk '{print $2}'</code>).</p>
 </li>
 <li>
-<p>The region is not important when using MinIO, this is a property that has effects when using AWS S3.</p>
+<p>The region is not important when using MinIO, this is a property that has effects when using AWS S3.
+However, you must enter a non-empty value to prevent problems with model serving.</p>
 </li>
 <li>
 <p>Mind typos for the bucket name.</p>
@@ -416,7 +417,25 @@ s3.download_file(bucket_name, s3_data_path, "my/local/path/dataset.csv")</code><
 </div>
 </li>
 <li>
-<p>Fill the form with the example values:</p>
+<p>Fill the form with the following values:</p>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Server name: <code>iris-model-server</code>.</p>
+</li>
+<li>
+<p>Serving runtime: <code>OpenVINO Model Server</code>.</p>
+</li>
+<li>
+<p>Select the checkboxes to expose the models through an external route, and to enable token authentication.
+Enter <code>iris-serviceaccount</code> as the service account name.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/add-server-form-example.png" alt="Add Server Form">
@@ -501,7 +520,27 @@ It is important to pay special attention to the following characteristics:</p>
 </div>
 </li>
 <li>
-<p>Fill the <strong>Deploy Model</strong> from as in the example:</p>
+<p>Fill the <strong>Deploy Model</strong> form.</p>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Model name: <code>iris-model</code></p>
+</li>
+<li>
+<p>Model framework: <code>onnx - 1</code></p>
+</li>
+<li>
+<p>Model location data connection: <code>iris-data-connection</code></p>
+</li>
+<li>
+<p>Model location path: <code>iris</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/deploy-model-form.png" alt="Deploy Model form">
@@ -520,9 +559,9 @@ It is important to pay special attention to the following characteristics:</p>
 <p>Observe and monitor the assets created in your OpenShift <strong>iris-project</strong> namespace.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc get routes -n iris-project
-oc get secrets -n iris-project | grep iris-model
-oc get events -n iris-project</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc get routes -n iris-project
+$ oc get secrets -n iris-project | grep iris-model
+$ oc get events -n iris-project</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -558,26 +597,28 @@ oc get events -n iris-project</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Assign the route to an environment variable in your local machine, so that we can use it in our curl commands</p>
+<p>Assign the route to an environment variable in your local machine, so that we can use it in our curl commands.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-model | awk '{print $2}')</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-model | awk '{print $2}')</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Assign an authentication token to an environment variable in your local machine</p>
+<p>Assign an authentication token to an environment variable in your local machine.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export TOKEN=$(oc whoami -t)</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ export TOKEN=$(oc whoami -t)</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Request an inference with the REST API</p>
+<p>Request an inference with the REST API.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-model/infer -X POST --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}],"outputs" : [{"name" : "output0"}]}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-model/infer \
+ -X POST \
+ --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}],"outputs" : [{"name" : "output0"}]}'</code></pre>
 </div>
 </div>
 </li>

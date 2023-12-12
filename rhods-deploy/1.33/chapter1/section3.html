@@ -297,7 +297,26 @@ spec:
 </div>
 </li>
 <li>
-<p>Fill up the form as in the following example, notice how <strong>Triton runtime 23.05</strong> is one of the available options for the <strong>Serving runtime</strong> dropdown.</p>
+<p>Create the model server with the following values:</p>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Server name: <code>iris-custom-server</code>.</p>
+</li>
+<li>
+<p>Serving runtime: <code>Triton runtime 23.05</code>.
+This is the newly added runtime.</p>
+</li>
+<li>
+<p>Activate the external route and the authentication.
+Use <code>custom-server-sa</code> as the service account name.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="paragraph">
 <p><span class="image"><img src="_images/custom-model-server-form.png" alt="Add model server form"></span></p>
 </div>
@@ -328,7 +347,27 @@ spec:
 </div>
 </li>
 <li>
-<p>Fill up the <strong>Deploy Model</strong> form as in the following example:</p>
+<p>Fill up the <strong>Deploy Model</strong> form:</p>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Model name: <code>iris-custom-model</code></p>
+</li>
+<li>
+<p>Model framework: <code>onnx - 1</code></p>
+</li>
+<li>
+<p>Model location data connection: <code>iris-data-connection</code></p>
+</li>
+<li>
+<p>Model location path: <code>iris</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/iris-custom-deploy-model-form.png" alt="Deploy model form">
@@ -371,26 +410,28 @@ You can be creative and name it differently, just mind your selection when runni
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Assign the route to an environment variable in your local machine, so that we can use it in our curl commands</p>
+<p>Assign the route to an environment variable in your local machine, so that we can use it in our curl commands.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-custom-model | awk '{print $2}')</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-custom-model | awk '{print $2}')</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Assign an authentication token to an environment variable in your local machine</p>
+<p>Assign an authentication token to an environment variable in your local machine.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">export TOKEN=$(oc whoami -t)</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ export TOKEN=$(oc whoami -t)</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Request an inference with the REST API</p>
+<p>Request an inference with the REST API.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-custom-model/infer -X POST --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}]}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl -H "Authorization: Bearer $TOKEN" \
+ $IRIS_ROUTE/v2/models/iris-custom-model/infer -X POST \
+ --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}]}'</code></pre>
 </div>
 </div>
 </li>
