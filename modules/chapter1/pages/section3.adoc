@@ -137,7 +137,15 @@ image::runtimes-list.png[Runtimes List]
 +
 image::add-custom-model-server.png[Add server]
 
-. Fill up the form as in the following example, notice how **Triton runtime 23.05** is one of the available options for the **Serving runtime** dropdown.
+. Create the model server with the following values:
++
+--
+* Server name: `iris-custom-server`.
+* Serving runtime: `Triton runtime 23.05`.
+This is the newly added runtime.
+* Activate the external route and the authentication.
+Use `custom-server-sa` as the service account name.
+--
 +
 image:custom-model-server-form.png[Add model server form]
 
@@ -151,7 +159,14 @@ image::custom-runtime.png[Iris custom server]
 +
 image::iris-custom-deploy-model.png[Deploy Model]
 
-. Fill up the **Deploy Model** form as in the following example:
+. Fill up the **Deploy Model** form:
++
+--
+* Model name: `iris-custom-model`
+* Model framework: `onnx - 1`
+* Model location data connection: `iris-data-connection`
+* Model location path: `iris`
+--
 +
 image::iris-custom-deploy-model-form.png[Deploy model form]
 +
@@ -169,23 +184,28 @@ image::triton-server-running.png[Triton server running]
 
 Now that the model is ready to use, we can make an inference using the REST API
 
-. Assign the route to an environment variable in your local machine, so that we can use it in our curl commands
+. Assign the route to an environment variable in your local machine, so that we can use it in our curl commands.
 +
-```shell
-export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-custom-model | awk '{print $2}')
-```
+[source,console]
+----
+$ export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-custom-model | awk '{print $2}')
+----
 
-. Assign an authentication token to an environment variable in your local machine
+. Assign an authentication token to an environment variable in your local machine.
 +
-```shell
-export TOKEN=$(oc whoami -t)
-```
+[source,console]
+----
+$ export TOKEN=$(oc whoami -t)
+----
 
-. Request an inference with the REST API
+. Request an inference with the REST API.
 +
-```shell
-curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-custom-model/infer -X POST --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}]}'
-```
+[source,console]
+----
+$ curl -H "Authorization: Bearer $TOKEN" \
+ $IRIS_ROUTE/v2/models/iris-custom-model/infer -X POST \
+ --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}]}'
+----
 
 . The result received from the inference service looks like the following:
 +

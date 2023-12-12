@@ -8,40 +8,44 @@ https://min.io[MinIO] is a high-performance, S3 compatible object store. It is b
 
 We will need an S3 solution to share the model from training to deploy, in this exercise we will prepare MinIO to be such S3 solution.
 
-. In OpenShift, create a new namespace with the name **object-datastore**
+. In OpenShift, create a new namespace with the name **object-datastore**.
 +
-```shell
-oc new-project object-datastore
-```
+[source,console]
+----
+$ oc new-project object-datastore
+----
 
-. Run the following yaml to install MinIO
+. Run the following yaml to install MinIO:
 +
-```shell
-curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
-oc apply -f ./minio.yml -n object-datastore
-```
+[source,console]
+----
+$ curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
+$ oc apply -f ./minio.yml -n object-datastore
+----
 
-. Get the route to the MinIO dashboard
+. Get the route to the MinIO dashboard.
 +
-```shell
-oc get routes -n object-datastore | grep minio-ui | awk '{print $2}'
-```
+[source,console]
+----
+$ oc get routes -n object-datastore | grep minio-ui | awk '{print $2}'
+----
 +
 [INFO]
 ====
 Use this route to navigate to the S3 dashboard using a browser. With the browser, you will be able to create buckets, upload files, and navigate the S3 contents.
 ====
 
-. Get the route to the MinIO API
+. Get the route to the MinIO API.
 +
-```shell
-oc get routes -n object-datastore | grep minio-api | awk '{print $2}'
-```
+[source,console]
+----
+$ oc get routes -n object-datastore | grep minio-api | awk '{print $2}'
+----
 +
 [INFO]
 ====
 Use this route as the S3 API endpoint. Basically, this is the URL that we will use when creating a data connection to the S3 in RHOAI.
-==== 
+====
 
 == Training The Model
 We will use the iris dataset model for this excercise.
@@ -55,9 +59,10 @@ It is recommended to use a workbench that was created with the **Standard Data S
 
 . Make sure that the workbench environment serves the required python packages for the notebook to run, for this to happen, open a terminal and run the following command to verify that the packages are already installed:
 +
-```shell
-  pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter2/requirements.txt
-```
+[source,console]
+----
+$ pip install -r /opt/app-root/src/rhods-qc-apps/4.rhods-deploy/chapter2/requirements.txt
+----
 
 [TIP]
 ====
@@ -95,7 +100,7 @@ Make sure to create a new path in your bucket, and upload to such path, not to r
 
 . In the RHOAI dashboard, create a project named **iris-project**.
 
-. In the **Data Connections** section, create a Data Connection to your S3
+. In the **Data Connections** section, create a Data Connection to your S3.
 +
 image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 +
@@ -104,6 +109,7 @@ image::add-minio-iris-data-connection.png[Add iris data connection from minio]
 - The credentials (Access Key/Secret Key) are `minio`/`minio123`.
 - Make sure to use the API route, not the UI route (`oc get routes -n object-datastore | grep minio-api | awk '{print $2}'`).
 - The region is not important when using MinIO, this is a property that has effects when using AWS S3.
+However, you must enter a non-empty value to prevent problems with model serving.
 - Mind typos for the bucket name.
 - You don't have to select a workbench to attach this data connection to.
 ====
@@ -160,7 +166,14 @@ s3.download_file(bucket_name, s3_data_path, "my/local/path/dataset.csv")
 +
 image::add-server-button.png[add server]
 
-. Fill the form with the example values:
+. Fill the form with the following values:
++
+--
+* Server name: `iris-model-server`.
+* Serving runtime: `OpenVINO Model Server`.
+* Select the checkboxes to expose the models through an external route, and to enable token authentication.
+Enter `iris-serviceaccount` as the service account name.
+--
 +
 image::add-server-form-example.png[Add Server Form]
 +
@@ -198,7 +211,14 @@ image::model-server-with-token.png[Model Server with token]
 +
 image::deploy-model-button.png[Deploy Model button]
 
-. Fill the **Deploy Model** from as in the example:
+. Fill the **Deploy Model** form.
++
+--
+* Model name: `iris-model`
+* Model framework: `onnx - 1`
+* Model location data connection: `iris-data-connection`
+* Model location path: `iris`
+--
 +
 image::deploy-model-form.png[Deploy Model form]
 
@@ -208,11 +228,12 @@ image::deploy-model-success.png[Deploy model success]
 
 . Observe and monitor the assets created in your OpenShift **iris-project** namespace.
 +
-```shell
-oc get routes -n iris-project
-oc get secrets -n iris-project | grep iris-model
-oc get events -n iris-project
-```
+[source,console]
+----
+$ oc get routes -n iris-project
+$ oc get secrets -n iris-project | grep iris-model
+$ oc get events -n iris-project
+----
 +
 image::iris-project-events.png[Iris project events]
 +
@@ -225,23 +246,28 @@ Deploying a **Model Server** triggers a **ReplicaSet** with **ModelMesh**, which
 
 Now that the model is ready to use, we can make an inference using the REST API
 
-. Assign the route to an environment variable in your local machine, so that we can use it in our curl commands
+. Assign the route to an environment variable in your local machine, so that we can use it in our curl commands.
 +
-```shell
-export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-model | awk '{print $2}')
-```
+[source,console]
+----
+$ export IRIS_ROUTE=https://$(oc get routes -n iris-project | grep iris-model | awk '{print $2}')
+----
 
-. Assign an authentication token to an environment variable in your local machine
+. Assign an authentication token to an environment variable in your local machine.
 +
-```shell
-export TOKEN=$(oc whoami -t) 
-```
+[source,console]
+----
+$ export TOKEN=$(oc whoami -t)
+----
 
-. Request an inference with the REST API
+. Request an inference with the REST API.
 +
-```shell
-curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-model/infer -X POST --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}],"outputs" : [{"name" : "output0"}]}'
-```
+[source,console]
+----
+$ curl -H "Authorization: Bearer $TOKEN" $IRIS_ROUTE/v2/models/iris-model/infer \
+ -X POST \
+ --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}],"outputs" : [{"name" : "output0"}]}'
+----
 
 The result of using the inference service looks like the following output:
 ```json

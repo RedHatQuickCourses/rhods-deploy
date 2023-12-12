@@ -47,7 +47,7 @@ A model server runtime is the execution environment or platform where a trained 
 
 The model server runtime can be a part of a larger deployment framework or service that includes features such as scalability, versioning, monitoring, and security. Examples of model server runtimes include TensorFlow Serving, TorchServe, and ONNX Runtime. These runtimes support the deployment of models trained using popular machine learning frameworks and provide a standardized way to serve predictions over APIs (Application Programming Interfaces).
 
-=== Inference Engine:
+=== Inference Engine
 An inference engine is a component responsible for executing the forward pass of a machine learning model to generate predictions based on input data. It is a crucial part of the model server runtime and is specifically designed for performing inference tasks efficiently. The inference engine takes care of optimizations, such as hardware acceleration and parallelization, to ensure that predictions are made quickly and with minimal resource utilization.
 
 The inference engine may be integrated into the model server runtime or work alongside it, depending on the specific architecture. For example, TensorFlow Serving incorporates TensorFlow's inference engine, and ONNX Runtime serves as both a runtime and an inference engine for models in the Open Neural Network Exchange (ONNX) format.
@@ -55,15 +55,15 @@ The inference engine may be integrated into the model server runtime or work alo
 **Relationship**:
 In summary, the model server runtime provides the overall environment for hosting and managing machine learning models in production, while the inference engine is responsible for the actual computation of predictions during inference. The two work together to deliver a scalable, efficient, and reliable solution for serving machine learning models in real-world applications. The choice of model server runtime and inference engine depends on factors such as the machine learning framework used, deployment requirements, and the specific optimizations needed for the target hardware.
 
-=== Unravel The Runtime
+== Unravel The Runtime
 
 When deploying machine learning models, we need to deploy a container that serves a **Runtime** and uses a **Model** to perform predictions, consider the following example:
 
-==== Train a model
+=== Train a Model
 
 Using a RHOAI instance, let us train and deploy an example.
 
-. In a data science project, create a `Standard Data Science`workbench.
+. In a data science project, create a `Standard Data Science` workbench.
 Then, open the workbench to go to the JupyterLab interface.
 +
 image::workbench_options.png[Workbench Options]
@@ -102,10 +102,10 @@ There are different formats and libraries to export the model, in this case we a
 
 * Torch
 
-The use of either of those formats depend on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.
+The use of either of those formats depends on the target server runtime, some of them are proven to be more efficient than others for certain type of training algorithms and model sizes.
 ====
 
-===== Use the model in another notebook
+=== Use the Model in Another Notebook
 
 The model can be deserialized in another notebook, and used to generate a prediction:
 
@@ -127,7 +127,7 @@ At this moment the model can be exported and imported in other projects for its 
 
 For this section, you need Podman to create an image, and a registry to upload the resulting image.
 
-=== web application that uses the model
+=== Web application that uses the model
 
 The pickle model that we previously exported can be used in a Flask application. In this section we present an example Flask application that uses the model.
 
@@ -251,33 +251,39 @@ CMD ["app:app"]
 
 . Build and push the image to an image registry
 +
-```shell
-podman login quay.io
-podman build -t purchase-predictor:1.0 .
-podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
-podman push quay.io/user_name/purchase-predictor:1.0
-```
+
+[source,console]
+----
+$ podman login quay.io
+$ podman build -t purchase-predictor:1.0 .
+$ podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
+$ podman push quay.io/user_name/purchase-predictor:1.0
+----
 +
 After you push the image, open quay.io in your browser and make the image public.
 
 . Deploy the model image to **OpenShift**
 +
-```shell
-oc login api.cluster.example.com:6443
-oc new-project model-deploy
-oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
-oc expose service purchase-predictor
-```
+[source,console]
+----
+$ oc login api.cluster.example.com:6443
+$ oc new-project model-deploy
+$ oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
+$ oc expose service purchase-predictor
+----
 
 Now we can use the Flask application with some commands such as:
-```shell
-curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
-ok%
-curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
+[source,console]
+----
+$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
+ok
+$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
 {"name":"Time to purchase amount predictor","version":"v1.0.0"}
-curl -d '{"time":4}' -H "Content-Type: application/json" -X POST http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
+$ curl -d '{"time":4}' -H "Content-Type: application/json" \
+> -X POST \
+> http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
 {"prediction":34,"status":200}
-```
+----
 
 [IMPORTANT]
 ====
