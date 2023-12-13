@@ -304,7 +304,7 @@ In this section we have manually:
 There are automated and faster ways to perform these steps. In the following sections, we will learn about runtimes that only require you to provide a model, and they automatically provision an inference service for you.
 ====
 
-=== RHOAI Model Serving Runtimes
+== RHOAI Model Serving Runtimes
 
 In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumption. In our example we used Flask.
 
@@ -312,8 +312,11 @@ However, in Red Hat OpenShift AI, you do not need to manually create serving run
 By default, Red Hat OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
 OpenVINO supports various model formats, such as the following ones:
 
-- https://onnx.ai[ONNX]: An open standard for machine learning interoperability.
-- https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.
+https://onnx.ai[ONNX]::
+An open standard for machine learning interoperability.
+
+https://docs.openvino.ai/latest/openvino_ir.html[OpenVino IR]::
+The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.
 
 In order to leverage the benefits of OpenVINO, you must:
 
@@ -324,3 +327,63 @@ In order to leverage the benefits of OpenVINO, you must:
 . Start a model server instance to publish your model for consumption
 
 While publishing this model server instance, the configurations will allow you to define how applications securely connect to your model server to request for predictions, and the resources that it can provide.
+
+=== Model Serving Resources
+
+When you use model serving, RHOAI uses the `ServingRuntime` and `InferenceService` custom resources.
+
+ServingRuntime::
+Defines a model server.
+
+InferenceService::
+Defines a model deployed in a model server.
+
+For example, if you create a model server called `foo`, then RHOAI creates the following resources:
+
+* `modelmesh-serving` Service
+* `foo` ServingRuntime
+** `modelmesh-serving-foo` Deployment
+*** `modelmesh-serving-foo-...` ReplicaSet
+**** `modelmesh-serving-foo-...-...` Pod
+
+The `ServingRuntime` defines your model server and owns a `Deployment` that runs the server workload.
+The name of this deployment is prefixed with the `modelmesh-serving-` prefix.
+Initially, when no models are deployed, the deployment is scaled to zero, so no pod replicas are running.
+
+When creating the first model server in a data science project, RHOAI also creates a `Service` called `modelmesh-serving` to map HTTP, HTTPs and gRPC traffic into the model servers.
+
+[NOTE]
+====
+The `modelmesh-serving` service maps traffic for all model servers.
+No additional services are created when you create more than one model server.
+====
+
+After you create a model server, you are ready to deploy models.
+When you deploy a model in a model server, RHOAI creates an `InferenceService` custom resource, which defines the deployed model properties, such as the name and location of the model file.
+For example, If you deploy a model called `my-model`, then RHOAI creates the following resources.
+
+* `my-model` InferenceService
+** `my-model` Route, which points to the `modelmesh-serving` Service.
+
+[NOTE]
+====
+The route is only created if you have selected the `Make deployed models available through an external route` checkbox when creating the server.
+The `InferenceService` owns the route.
+====
+
+At the same time, to be able to serve the model, RHOAI starts the model server by scaling the `model-serving-` deployment up to one pod replica.
+This model serving pod runs the model serving containers:
+
+* `mm`: the ModelMesh model serving framework.
+* The model serving runtime container, such as `ovms` for OpenVINO.
+* The ModelMesh https://github.com/kserve/modelmesh-runtime-adapter[runtime adapter] for your specifc serving runtime.
+For example, if you are using OpenVINO, then the container is `ovms-adapter`.
+* `rest-proxy`: For HTTP traffic.
+* `oauth-proxy`: For authenticating HTTP requests.
+
+[NOTE]
+====
+The `modelmesh-serving` pod runs the model server, which handles one or more deployed models.
+No additional pods are created when you deploy multiple models.
+====
+
