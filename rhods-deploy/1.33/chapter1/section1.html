@@ -575,8 +575,11 @@ $ curl -d '{"time":4}' -H "Content-Type: application/json" \
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_rhoai_model_serving_runtimes"><a class="anchor" href="#_rhoai_model_serving_runtimes"></a>RHOAI Model Serving Runtimes</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rhoai_model_serving_runtimes"><a class="anchor" href="#_rhoai_model_serving_runtimes"></a>RHOAI Model Serving Runtimes</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In the previous example, we manually created a Model Server by sending the model to an image that can interpret the model and expose it for consumption. In our example we used Flask.</p>
 </div>
@@ -585,15 +588,17 @@ $ curl -d '{"time":4}' -H "Content-Type: application/json" \
 By default, Red Hat OpenShift AI includes a pre-configured model serving runtime, OpenVINO, which can load, execute, and expose  models trained with TensorFlow and PyTorch.
 OpenVINO supports various model formats, such as the following ones:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://onnx.ai">ONNX</a>: An open standard for machine learning interoperability.</p>
-</li>
-<li>
-<p><a href="https://docs.openvino.ai/latest/openvino_ir.html">OpenVino IR</a>: The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.</p>
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a href="https://onnx.ai">ONNX</a></dt>
+<dd>
+<p>An open standard for machine learning interoperability.</p>
+</dd>
+<dt class="hdlist1"><a href="https://docs.openvino.ai/latest/openvino_ir.html">OpenVino IR</a></dt>
+<dd>
+<p>The proprietary model format of OpenVINO, the model serving runtime used in OpenShift AI.</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>In order to leverage the benefits of OpenVINO, you must:</p>
@@ -619,6 +624,153 @@ OpenVINO supports various model formats, such as the following ones:</p>
 </div>
 <div class="paragraph">
 <p>While publishing this model server instance, the configurations will allow you to define how applications securely connect to your model server to request for predictions, and the resources that it can provide.</p>
+</div>
+<div class="sect2">
+<h3 id="_model_serving_resources"><a class="anchor" href="#_model_serving_resources"></a>Model Serving Resources</h3>
+<div class="paragraph">
+<p>When you use model serving, RHOAI uses the <code>ServingRuntime</code> and <code>InferenceService</code> custom resources.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">ServingRuntime</dt>
+<dd>
+<p>Defines a model server.</p>
+</dd>
+<dt class="hdlist1">InferenceService</dt>
+<dd>
+<p>Defines a model deployed in a model server.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For example, if you create a model server called <code>foo</code>, then RHOAI creates the following resources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>modelmesh-serving</code> Service</p>
+</li>
+<li>
+<p><code>foo</code> ServingRuntime</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>modelmesh-serving-foo</code> Deployment</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>modelmesh-serving-foo-&#8230;&#8203;</code> ReplicaSet</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>modelmesh-serving-foo-&#8230;&#8203;-&#8230;&#8203;</code> Pod</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>ServingRuntime</code> defines your model server and owns a <code>Deployment</code> that runs the server workload.
+The name of this deployment is prefixed with the <code>modelmesh-serving-</code> prefix.
+Initially, when no models are deployed, the deployment is scaled to zero, so no pod replicas are running.</p>
+</div>
+<div class="paragraph">
+<p>When creating the first model server in a data science project, RHOAI also creates a <code>Service</code> called <code>modelmesh-serving</code> to map HTTP, HTTPs and gRPC traffic into the model servers.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>modelmesh-serving</code> service maps traffic for all model servers.
+No additional services are created when you create more than one model server.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After you create a model server, you are ready to deploy models.
+When you deploy a model in a model server, RHOAI creates an <code>InferenceService</code> custom resource, which defines the deployed model properties, such as the name and location of the model file.
+For example, If you deploy a model called <code>my-model</code>, then RHOAI creates the following resources.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>my-model</code> InferenceService</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>my-model</code> Route, which points to the <code>modelmesh-serving</code> Service.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The route is only created if you have selected the <code>Make deployed models available through an external route</code> checkbox when creating the server.
+The <code>InferenceService</code> owns the route.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>At the same time, to be able to serve the model, RHOAI starts the model server by scaling the <code>model-serving-</code> deployment up to one pod replica.
+This model serving pod runs the model serving containers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mm</code>: the ModelMesh model serving framework.</p>
+</li>
+<li>
+<p>The model serving runtime container, such as <code>ovms</code> for OpenVINO.</p>
+</li>
+<li>
+<p>The ModelMesh <a href="https://github.com/kserve/modelmesh-runtime-adapter">runtime adapter</a> for your specifc serving runtime.
+For example, if you are using OpenVINO, then the container is <code>ovms-adapter</code>.</p>
+</li>
+<li>
+<p><code>rest-proxy</code>: For HTTP traffic.</p>
+</li>
+<li>
+<p><code>oauth-proxy</code>: For authenticating HTTP requests.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>modelmesh-serving</code> pod runs the model server, which handles one or more deployed models.
+No additional pods are created when you deploy multiple models.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
