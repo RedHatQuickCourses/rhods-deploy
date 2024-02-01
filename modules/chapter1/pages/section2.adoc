@@ -19,8 +19,7 @@ $ oc new-project object-datastore
 +
 [source,console]
 ----
-$ curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
-$ oc apply -f ./minio.yml -n object-datastore
+$ oc apply -f https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml -n object-datastore
 ----
 
 . Get the route to the MinIO dashboard.
