@@ -260,28 +260,43 @@ $ podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
 $ podman push quay.io/user_name/purchase-predictor:1.0
 ----
 +
+[NOTE]
+====
+If you are running macOS ARM versions, then run:
+
+podman build --platform linux/amd64 -t purchase-predictor:1.0 .
+
+====
++
 After you push the image, open quay.io in your browser and make the image public.
 
-. Deploy the model image to **OpenShift**
+. Deploy the model image to **OpenShift**. Get the OCP_CLUSTER_URL value from your RHDP page for this classroom.
 +
 [source,console]
 ----
-$ oc login api.cluster.example.com:6443
+$ oc login <OCP_CLUSTER_URL>:6443
 $ oc new-project model-deploy
 $ oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
 $ oc expose service purchase-predictor
 ----
 
+. Get the route for the deployed application
++
+[source,console]
+----
+$ ROUTE_NAME=$(oc get route purchase-predictor -o jsonpath='{.spec.host}')
+----
+
 Now we can use the Flask application with some commands such as:
 [source,console]
 ----
-$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
+$ curl http://$ROUTE_NAME/health
 ok
-$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
+$ curl http://$ROUTE_NAME/info
 {"name":"Time to purchase amount predictor","version":"v1.0.0"}
 $ curl -d '{"time":4}' -H "Content-Type: application/json" \
 > -X POST \
-> http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
+> http://$ROUTE_NAME/predict
 {"prediction":34,"status":200}
 ----
 

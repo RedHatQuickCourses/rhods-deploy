@@ -10,7 +10,7 @@ This course is the *fourth* in a series of *five* courses about Red Hat OpenShif
 4. Deploying Machine Learning Models with Red Hat OpenShift AI (_This course_)
 5. https://redhatquickcourses.github.io/rhods-pipelines[Automation using Data Science Pipelines]
 
-NOTE: After you have completed all the courses in the learning path, you can attempt the https://github.com/RedHatQuickCourses/rhods-qc-apps/tree/main/7.hands-on-lab["Hit the RHODS"] exercise, that tests your understanding of the concepts taught in all the courses.
+NOTE: After you have completed all the courses in the learning path, you can attempt the https://github.com/RedHatQuickCourses/rhods-qc-apps/tree/main/7.hands-on-lab["Workshop final lab"] exercise, that tests your understanding of the concepts taught in all the courses.
 
 == Authors
 
