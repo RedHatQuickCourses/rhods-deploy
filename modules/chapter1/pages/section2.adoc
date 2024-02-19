@@ -19,8 +19,7 @@ $ oc new-project object-datastore
 +
 [source,console]
 ----
-$ curl https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml
-$ oc apply -f ./minio.yml -n object-datastore
+$ oc apply -f https://raw.githubusercontent.com/RedHatQuickCourses/rhods-qc-apps/main/4.rhods-deploy/chapter2/minio.yml -n object-datastore
 ----
 
 . Get the route to the MinIO dashboard.
@@ -87,7 +86,7 @@ To convert from TensorFlow, use the https://github.com/onnx/tensorflow-onnx[tf2o
 +
 image::iris-download.png[iris model download]
 
-. Upload the file `rf_iris.onnx` to a bucket named **models**, with a path **iris** in your S3
+. Upload the file `rf_iris.onnx` to a bucket named **models**, with a path **iris** in your S3. The username is *minio* and the password is *minio123*.
 +
 image::iris-s3-upload.png[iris model s3 upload]
 +
