@@ -503,18 +503,43 @@ $ podman tag purchase-predictor:1.0 quay.io/user_name/purchase-predictor:1.0
 $ podman push quay.io/user_name/purchase-predictor:1.0</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are running macOS ARM versions, then run:</p>
+</div>
+<div class="paragraph">
+<p>podman build --platform linux/amd64 -t purchase-predictor:1.0 .</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>After you push the image, open quay.io in your browser and make the image public.</p>
 </div>
 </li>
 <li>
-<p>Deploy the model image to <strong>OpenShift</strong></p>
+<p>Deploy the model image to <strong>OpenShift</strong>. Get the OCP_CLUSTER_URL value from your RHDP page for this classroom.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc login api.cluster.example.com:6443
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ oc login &lt;OCP_CLUSTER_URL&gt;:6443
 $ oc new-project model-deploy
 $ oc new-app --name purchase-predictor quay.io/user_name/purchase-predictor:1.0
 $ oc expose service purchase-predictor</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get the route for the deployed application</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ ROUTE_NAME=$(oc get route purchase-predictor -o jsonpath='{.spec.host}')</code></pre>
 </div>
 </div>
 </li>
@@ -525,13 +550,13 @@ $ oc expose service purchase-predictor</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/health
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ curl http://$ROUTE_NAME/health
 ok
-$ curl http://purchase-predictor-model-deploy.apps.cluster.example.com/info
+$ curl http://$ROUTE_NAME/info
 {"name":"Time to purchase amount predictor","version":"v1.0.0"}
 $ curl -d '{"time":4}' -H "Content-Type: application/json" \
 &gt; -X POST \
-&gt; http://purchase-predictor-model-deploy.apps.cluster.example.com/predict
+&gt; http://$ROUTE_NAME/predict
 {"prediction":34,"status":200}</code></pre>
 </div>
 </div>
