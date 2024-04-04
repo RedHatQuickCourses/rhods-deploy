@@ -1,0 +1,348 @@
+= KServe - Model Serving
+
+RHOAI has two main components for serving 
+
+* KServe Serving for single-model serving
+* KServe ModelMesh for multi-model serving
+
+The two components are similar in that they retrieve models from S3 buckets and expose these models via an inferencing endpoint.
+However there are significant differences in how they work and the use cases they serve. 
+
+== Model Mesh
+In the multi-model approach serving pods can run one or more models simulateneously from the same pod. 
+As requests for a particular model are received the ModelMesh routing layer assigns the model to an existing serving pod. 
+In the serving pod a modelmesh-runtime-adapter retrieves the specified model and hands it over to the model adapter to serve.
+Once the model is available the modelmesh-runtime-adapter instructs the routing later to forward any requests related to the model to the serving endpoint.
+The modelmesh routing layer handles the dynamic nature of inferencing requests in that it can spin up additional model instances when load increase as well 
+as reducing the number of serving instances when load decreases. 
+
+The ModelMesh approach is useful for when customers are operating at a large scale with significant numbers of frequently changing models of different types. 
+
+image::ModelMesh-Serving.png[Model Mesh Architecture]
+ref: https://github.com/kserve/modelmesh-serving/raw/main/docs/images/0.2.0-highlevel.png
+
+We have covered *ModelMesh* previously so we'll just concentrate on KServe Serving for the moment.
+
+== KServe Serving
+
+KServe Serving takes a different approach to ModelMesh. Using this approach a single model (hence the name) is served from a pod 
+and those pods are managed and controlled via OpenShift Serverless (KNative) and ingress traffic is handled by OpenShift Service Mesh. 
+Using KNative enables serving pods to be spun up and down, even to zero, depending on request load. Similar to ModelMesh the models are loaded from S3 buckets.
+
+
+image::Kserve-Serving.png[KServe Architecture]
+ref: https://kserve.github.io/website/master/images/kserve_layer.png
+
+
+At the time of writing the Red Hat OpenShift AI (2.8.0) has the following KServe Serving Runtimes:
+
+* OpenVINO Model Server which can serve the following model formats:
+    ** OpenVINO IR
+    ** ONNX
+    ** Tensorflow
+* Caikit TGIS
+* TGIS Standalone
+* Custom Runtimes (not supported by Red Hat)
+
+Similar to ModelMesh, KServe serving utilises the _servingruntimes_ and _inferenceservice_ custom resources.
+
+=== Example of KServe model serving
+
+The following example shows how to use CRs to serve our existing Iris model.
+
+For Serving we use the OpenVINO serving runtime.
+```
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  annotations:
+    opendatahub.io/accelerator-name: ""
+    opendatahub.io/apiProtocol: REST
+    opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+    opendatahub.io/template-display-name: OpenVINO Model Server
+    opendatahub.io/template-name: kserve-ovms
+    openshift.io/display-name: irisv
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: irisv
+spec:
+  annotations:
+    prometheus.kserve.io/path: /metrics
+    prometheus.kserve.io/port: "8888"
+  containers:
+  - args:
+    - --model_name={{.Name}}
+    - --port=8001
+    - --rest_port=8888
+    - --model_path=/mnt/models
+    - --file_system_poll_wait_seconds=0
+    - --grpc_bind_address=127.0.0.1
+    - --rest_bind_address=127.0.0.1
+    - --target_device=AUTO
+    - --metrics_enable
+    image: quay.io/modh/openvino_model_server@sha256:5d04d405526ea4ce5b807d0cd199ccf7f71bab1228907c091e975efa770a4908
+    name: kserve-container
+    ports:
+    - containerPort: 8888
+      protocol: TCP
+    resources:
+      limits:
+        cpu: "2"
+        memory: 8Gi
+      requests:
+        cpu: "1"
+        memory: 4Gi
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: shm
+  multiModel: false
+  protocolVersions:
+  - v2
+  - grpc-v2
+  supportedModelFormats:
+  - autoSelect: true
+    name: openvino_ir
+    version: opset13
+  - name: onnx
+    version: "1"
+  - autoSelect: true
+    name: tensorflow
+    version: "1"
+  - autoSelect: true
+    name: tensorflow
+    version: "2"
+  - autoSelect: true
+    name: paddle
+    version: "2"
+  - autoSelect: true
+    name: pytorch
+    version: "2"
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2Gi
+    name: shm
+```
+
+The _inferenceservice_ is more interesting as it allows users to specify the Min and Max replica count as well as the S3 location of the model.
+
+```
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    openshift.io/display-name: irisv
+    serving.knative.openshift.io/enablePassthrough: "true"
+    sidecar.istio.io/inject: "true"
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: irisv
+spec:
+  predictor:
+    maxReplicas: 1
+    minReplicas: 0
+    model:
+      modelFormat:
+        name: onnx
+        version: "1"
+      name: ""
+      resources: {}
+      runtime: irisv
+      storage:
+        key: aws-connection-minio
+        path: iris
+```
+
+[NOTE] 
+The _maxReplicas_ and _minReplicas_ enable the serving pods to use KNative autoscaling. In particular setting the _minReplicas_ to *"0"* will result in the serving pod being terminated after a timeout where no inferencing requests have been received.
+
+[IMPORTANT]
+KServe accesses models using versions. However it requires that models are stored in a specific S3 directory structure which is _bucket_name/model_name/model_version_ e.g. *model-data-bucket/iris2/6* . In the InferenceService only the model name field is required e.g. "iris2".
+
+[CAUTION] 
+If a serving pod is restarted then the highest version of the model stored on s3 will be retrieved and will be served.
+
+
+[sidebar]
+.Useful HTTP Requests
+****
+*To retrieve the metadata of the model served*
+```
+$ curl https://irisv2-testproject1.apps.example.com/v2/models/irisv2
+```
+The response should look similar to the following:
+```
+{"name":"irisv2","versions":["7"],"platform":"OpenVINO","inputs":[{"name":"X","datatype":"FP32","shape":[-1,4]}],"outputs":[{"name":"label","datatype":"INT64","shape":[-1]},{"name":"scores","datatype":"FP32","shape":[-1,3]}]}
+```
+
+*To send an inference request* 
+```
+curl   https://irisv2-testproject1.apps.example.com/v2/models/irisv2/versions/7/infer -X POST --data '{"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 2 ]}],"outputs" : [{"name" : "output9"}]}'
+```
+
+The response should look similar to the following:
+```
+{
+    "model_name": "irisv2",
+    "model_version": "7",
+    "outputs": [{
+            "name": "label",
+            "shape": [1],
+            "datatype": "INT64",
+            "data": [1]
+        }, {
+            "name": "scores",
+            "shape": [1, 3],
+            "datatype": "FP32",
+            "data": [3.4445483684539797, 3.1545653343200685, 4.803158760070801]
+        }]
+}
+```
+
+*To determine the server version*
+```
+curl https://irisv2-testproject1.apps.example.com/v2
+```
+
+```
+{"name":"OpenVINO Model Server","version":"2023.3.0"}
+```
+****
+
+
+=== KServe Request/Response Logging
+
+KServe can log request/response payloads and emit _CloudEvents_, these can be consumed by KNative services and/or brokers for further distribution or processing. 
+
+Adding logging is done by modifying the InferenceServce to specify what to log and where to send the Cloud Events e.g.
+
+
+    logger:
+      mode: all
+      url: http://cloud-event-receiver.a.b.c/
+
+
+* The URL is the address of the endpoint to send the cloudevent to
+* The mode is the scope, "all" for request/response or "request" or "response"
+
+==== Working Example
+
+First we need to setup a destination for the CloudEvents to be sent to. The following is a simple KNative service just writes the contents of the received CloudEvent to STDOUT. 
+
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: message-logger
+spec:
+  template:
+    spec:
+      containers:
+      - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/event_display
+```
+
+Now modify the InferenceService to add the logging configuration.
+
+```
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    openshift.io/display-name: irisv
+    serving.knative.openshift.io/enablePassthrough: "true"
+    sidecar.istio.io/inject: "true"
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: irisv
+spec:
+  predictor:
+    maxReplicas: 1
+    minReplicas: 0
+    logger:
+      mode: all
+      url: 'http://message-logger.testproject1.svc.cluster.local'
+    model:
+      modelFormat:
+        name: onnx
+        version: "1"
+      name: ""
+      resources: {}
+      runtime: irisv
+      storage:
+        key: aws-connection-minio
+        path: iris
+```
+
+When the inference service gets called it will send a CloudEvent to the _message-logger_ pod created by Knative and the contents will be displayed e.g.
+
+```
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   datacontenttype: application/x-www-form-urlencoded
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Extensions,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   component: predictor
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   endpoint: 
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   inferenceservicename: irisv2
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   namespace: testproject1
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   traceparent: 00-d8850f990eb31ce4d9fc44a7d0b92e49-a7ddee23892e4486-00
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Data,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   {"inputs" : [{"name" : "X","shape" : [ 1, 4 ],"datatype" : "FP32","data" : [ 3, 4, 3, 8 ]}],"outputs" : [{"name" : "output9"}]}
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container ☁️  cloudevents.Event
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Validation: valid
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Context Attributes,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   specversion: 1.0
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   type: org.kubeflow.serving.inference.response
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   source: http://localhost:9081/
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   id: 7535dff2-0ce2-4fc4-9803-22592f57dc1e
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   time: 2024-04-04T15:41:52.783409837Z
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   datacontenttype: application/json
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Extensions,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   component: predictor
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   endpoint: 
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   inferenceservicename: irisv2
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   namespace: testproject1
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   traceparent: 00-9b1cc0d3b9152925d165e5b50a67f222-11fb14da94923e01-00
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container Data,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   {
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     "model_name": "irisv2",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     "model_version": "7",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     "outputs": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container       {
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "name": "label",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "shape": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           1
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         ],
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "datatype": "INT64",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "data": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           0
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         ]
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container       },
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container       {
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "name": "scores",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "shape": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           1,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           3
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         ],
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "datatype": "FP32",
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "data": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           7.399900436401367,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           8.187074661254883,
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           7.640551567077637
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         ]
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container       }
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     ]
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   }
+```
+
+[NOTE]
+The combination of KServe and KNative is a powerful combination enabling the efficient usage of cluster resources by adopting a serverless approach i.e. only creating pods when necessary and spinning them down when not needed.
+
+
+Batching
+Transformers, 
+TGIS
+Custom serving example
+
+ 
+
+
