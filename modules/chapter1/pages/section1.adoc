@@ -116,7 +116,7 @@ image::use-purchase-amount-notebook.png[use-purchase-amount notebook create]
 . Run the **use-purchase-amount** notebook and notice the result:
 +
 - You can get the same result without training the model again.
-- You are not training the model in the **user-purchase-amount** notebook, you are re-using the output from the training notebook, and using the generated model to generate an inference.
+- You are not training the model in the **use-purchase-amount** notebook, you are re-using the output from the training notebook, and using the generated model to generate an inference.
 
 [TIP]
 ====
