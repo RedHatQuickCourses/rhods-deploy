@@ -18,10 +18,7 @@ as reducing the number of serving instances when load decreases.
 
 The ModelMesh approach is useful for when customers are operating at a large scale with significant numbers of frequently changing models of different types. 
 
-image::ModelMesh-Serving.png[Model Mesh Architecture]
-ref: https://github.com/kserve/modelmesh-serving/raw/main/docs/images/0.2.0-highlevel.png
-
-We have covered *ModelMesh* previously so we'll just concentrate on KServe Serving for the moment.
+We have covered *ModelMesh* previously so we'll just concentrate on KServe Serving here.
 
 == KServe Serving
 
@@ -44,13 +41,27 @@ At the time of writing the Red Hat OpenShift AI (2.8.0) has the following KServe
 * TGIS Standalone
 * Custom Runtimes (not supported by Red Hat)
 
+[sidebar]
+.ModelMesh - KServe Serving feature parity
+****
+At the time of writing the Red Hat OpenShift AI (2.8.0) KServe does not have full feature parity with ModelMesh.
+
+* KServe uses self-signed certificates out of the box.
+* KServe only has public, unauthenticated endpoints.
+* KServe metrics are not visable in the RHOAI UI.
+
+All of these features are bring worked on and will be added in a future release of RHOAI.
+****
+
+=== KServe Serving example
 Similar to ModelMesh, KServe serving utilises the _servingruntimes_ and _inferenceservice_ custom resources.
-
-=== Example of KServe model serving
-
 The following example shows how to use CRs to serve our existing Iris model.
 
-For Serving we use the OpenVINO serving runtime.
+For Serving we will use the OpenVINO serving runtime. 
+
+[TIP] 
+Notice that the _multiModel_ attribute is set to *False*, this indicates that the runtime is KServe and not ModelMesh.
+
 ```
 apiVersion: serving.kserve.io/v1alpha1
 kind: ServingRuntime
@@ -108,15 +119,6 @@ spec:
   - autoSelect: true
     name: tensorflow
     version: "1"
-  - autoSelect: true
-    name: tensorflow
-    version: "2"
-  - autoSelect: true
-    name: paddle
-    version: "2"
-  - autoSelect: true
-    name: pytorch
-    version: "2"
   volumes:
   - emptyDir:
       medium: Memory
@@ -155,7 +157,7 @@ spec:
 ```
 
 [NOTE] 
-The _maxReplicas_ and _minReplicas_ enable the serving pods to use KNative autoscaling. In particular setting the _minReplicas_ to *"0"* will result in the serving pod being terminated after a timeout where no inferencing requests have been received.
+The _maxReplicas_ and _minReplicas_ enable the serving pods to scale based on traffic. In particular setting the _minReplicas_ to *"0"* will result in the serving pod being terminated after a timeout where no inferencing requests have been received.
 
 [IMPORTANT]
 KServe accesses models using versions. However it requires that models are stored in a specific S3 directory structure which is _bucket_name/model_name/model_version_ e.g. *model-data-bucket/iris2/6* . In the InferenceService only the model name field is required e.g. "iris2".
@@ -163,9 +165,8 @@ KServe accesses models using versions. However it requires that models are store
 [CAUTION] 
 If a serving pod is restarted then the highest version of the model stored on s3 will be retrieved and will be served.
 
-
 [sidebar]
-.Useful HTTP Requests
+.Useful HTTP Requests (V2)
 ****
 *To retrieve the metadata of the model served*
 ```
@@ -309,7 +310,7 @@ message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     "model_versi
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container     "outputs": [
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container       {
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "name": "label",
-message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "shape": [
+message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "shape": [q
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container           1
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         ],
 message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container         "datatype": "INT64",
@@ -338,11 +339,70 @@ message-logger-00001-deployment-84b8dfdcd7-zvbpm user-container   }
 The combination of KServe and KNative is a powerful combination enabling the efficient usage of cluster resources by adopting a serverless approach i.e. only creating pods when necessary and spinning them down when not needed.
 
 
-Batching
-Transformers, 
-TGIS
-Custom serving example
+[sidebar]
+.Inference Protocol Versions
+****
+Currently KServe supports two versions of the Inference Protocol. 
 
- 
+- V1 Inference Protocol.
+
+The V1 protocol can still be used but will be deprecated in the future. For more information see https://kserve.github.io/website/latest/modelserving/data_plane/v1_protocol/[KServe V1 Protocol]
+
+- Open Inference Protocol aka KServe V2 Inference Protocol. 
+
+The https://github.com/kserve/open-inference-protocol[Open Inference Protocol] is focused on passing Tensor values.
+
+It is supported by a number of runtimes:
+
+- NVidia Triton
+
+- MLServer 
+
+- OpenVINO
+
+- TorchServe
+
+- AMD Inference Server
+
+The Open Inference working group is actively working on extending the V2 protocol to enable to be more schema flexible. 
+The intention is to deprecate the V1 protocols once this is complete. See https://kserve.github.io/website/latest/modelserving/data_plane/v2_protocol/[KServe V2 protocol] for more information.
 
 
+The recommendation is to move to/adopt the V2 protocol where possible.
+
+****
+=== Transformers
+
+A _Transformer_ is a component that wraps around the Model Inference call in order to perform pre-processing on the incoming Inference request before it's passed to the model for inferencing. A subsequent post-processing step can manipulate the response before it's passed back to the caller. 
+
+The _Transformer_ interface uses the same format as the _Inferencing_ request see https://kserve.github.io/website/0.11/modelserving/data_plane/v2_protocol/[Open Inference Protocol (V2 Inference Protocol)] and both REST and gRPC protocols are supported.
+
+Transformers are built in Python by extending the _Kserve.Model_ class and implementing the *preprocess* and *postprocess* methods.
+
+Transformers can be useful in multiple use cases e.g. 
+
+* Feature store integration.
+* Request parameter validation.
+* Results processing.
+
+[NOTE]
+Transformers support the _V1_ and _V2_ inferencing protocols. Ensure that you are using the correct one based on the model server that you're using.
+
+The KServe repo has a number of Transformer examples e.g.
+
+* https://github.com/kserve/kserve/blob/master/docs/samples/kafka/image_transformer/image_transformer.py[Image Transformer]
+* https://github.com/kserve/website/tree/main/docs/modelserving/v1beta1/transformer/torchserve_image_transformer[TorchServer Transformer]
+* https://kserve.github.io/website/0.12/modelserving/v1beta1/transformer/feast/[Fast Integration with Transformers]
+
+
+=== Inference Graph
+In a number of advanced use cases AI multiple models often have to be called in sequence to form a complete solution. 
+The result of an inference call to one model is fed into the inference input to the next model in the chain.
+
+An example of this in action would be having one model perform feature/anomoly detection and have a second model suggest compensating activities to be performed.
+
+
+Using multiple models can simplify model training as each model in the chain is only focused on a single aspect of the overall chain.
+This is similar to the https://en.wikipedia.org/wiki/Single_responsibility_principle[Single Responsibility Principal] in software engineering.
+
+For more information and examples please look at the https://kserve.github.io/website/latest/modelserving/inference_graph/[Kserve Inference Graph] documentation.
