@@ -62,7 +62,7 @@ For Serving we will use the OpenVINO serving runtime.
 [TIP] 
 Notice that the _multiModel_ attribute is set to *False*, this indicates that the runtime is KServe and not ModelMesh.
 
-```
+```[yaml]
 apiVersion: serving.kserve.io/v1alpha1
 kind: ServingRuntime
 metadata:
@@ -128,7 +128,7 @@ spec:
 
 The _inferenceservice_ is more interesting as it allows users to specify the Min and Max replica count as well as the S3 location of the model.
 
-```
+```[yaml]
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -183,7 +183,7 @@ curl   https://irisv2-testproject1.apps.example.com/v2/models/irisv2/versions/7/
 ```
 
 The response should look similar to the following:
-```
+```[json]
 {
     "model_name": "irisv2",
     "model_version": "7",
@@ -231,7 +231,7 @@ Adding logging is done by modifying the InferenceServce to specify what to log a
 
 First we need to setup a destination for the CloudEvents to be sent to. The following is a simple KNative service just writes the contents of the received CloudEvent to STDOUT. 
 
-```
+```[yaml]
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -245,7 +245,7 @@ spec:
 
 Now modify the InferenceService to add the logging configuration.
 
-```
+```[yaml]
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
