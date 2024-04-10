@@ -58,8 +58,10 @@ The model is served using the gRPC protocol and to test we need to fullfill a nu
 
 
 * Execute the following command to call the model
-```
+```[bash]
 grpcurl -proto proto/generation.proto -d '{"requests": [{"text": "generate a superhero name?"}]}' -H 'mm-model-id: flan-t5-small' -insecure t51-testproject1.apps...:443 fmaas.GenerationService/Generate
+```
+```[json]
 {
   "responses": [
     {
@@ -73,9 +75,10 @@ grpcurl -proto proto/generation.proto -d '{"requests": [{"text": "generate a sup
 ```
 
 * Execute the following command to find out details of the model being served
-```
+```[bash]
 grpcurl -proto proto/generation.proto -d '{"model_id": "flan-t5-small" }' -H 'mm-model-id: flan-t5-small' -insecure t51-testproject1.apps.....:443 fmaas.GenerationService/ModelInfo
-
+```
+```[json]
 {
   "modelKind": "ENCODER_DECODER",
   "maxSequenceLength": 512,
@@ -85,156 +88,4 @@ grpcurl -proto proto/generation.proto -d '{"model_id": "flan-t5-small" }' -H 'mm
 
 [NOTE]
 For an python based example look https://github.com/cfchase/basic-tgis[here]
-
-= KServe Custom Serving Example
-
-KServe can also serve custom built runtimes. In this example we are going to serve a _large language model_ via a custom runtime using the _llama.cpp_ project.
-
-[sidebar]
-.Llama.cpp - Running LLMs locally
-****
-https://github.com/ggerganov/llama.cpp[LLama.cpp] is an OpenSource project which enables CPU & GPU based inferencing on quantized LLMs.
-Llama.cpp uses the quantized _GGUF_ & _GGML_ model formats. Initially llama.cpp was written to serve LLama models from Meta but it has been extended to support other model architectures. 
-
-We're using llama.cpp here as it doesn't require a GPU to run a provides more features and a longer context length than the T5 models.
-Llama.cpp also has a basic HTTP server component which enables us to invoke models for inferencing. In this example we are not using the inbuilt HTTP server but are using another OSS projects named https://llama-cpp-python.readthedocs.io[llama-cpp-python] which provides a OpenAI compatible web server.
-****
-
-[CAUTION]
-This is an example of a custom runtime is should *NOT* be used in a production setting.
-
-== Build the custom runtime
-
-To build the runtime the following _containerfile_ will download the _llama.cpp_ source code, compile it and containerise it.
-
-```[docker]
-FROM registry.access.redhat.com/ubi9/python-311
-
-USER 0
-RUN dnf install -y git make g++ atlas-devel atlas openblas openblas-openmp
-RUN mkdir -p /opt/llama.cpp && chmod 777 /opt/llama.cpp
-
-WORKDIR /opt
-
-USER 1001
-WORKDIR /opt
-RUN git clone https://github.com/ggerganov/llama.cpp
-
-WORKDIR /opt/llama.cpp
-RUN make
-
-RUN pip install llama-cpp-python
-RUN pip install uvicorn anyio starlette fastapi sse_starlette starlette_context pydantic_settings
-
-ENV MODELNAME=test
-ENV MODELLOCATION=/tmp/models
-
-## Set value to "--chat_format chatml" for prompt formats
-## see https://github.com/abetlen/llama-cpp-python/blob/main/llama_cpp/llama_chat_format.py
-ENV CHAT_FORMAT=""
-EXPOSE 8080
-
-ENTRYPOINT python3 -m llama_cpp.server --model ${MODELLOCATION}/${MODELNAME} ${CHAT_FORMAT} --host 0.0.0.0 --port 8080
-```
-
-Use podman to build, tag and push to the image to the registry of your choosing.
-
-Use the following _ServingRuntime_ definition to configure the cluster via the RHOAI UI.
-
-```[yaml]
-apiVersion: serving.kserve.io/v1alpha1
-kind: ServingRuntime
-labels:
-  opendatahub.io/dashboard: "true"
-metadata:
-  annotations:
-    openshift.io/display-name: LLamaCPP
-  name: llamacpp
-spec:
-  builtInAdapter:
-    modelLoadingTimeoutMillis: 90000
-  containers:
-    - image: quay.io/noeloc/llama-cpp-python:latest
-      name: kserve-container
-      env:
-      - name: MODELNAME
-        value: "llama-2-7b-chat.Q4_K_M.gguf"
-      - name: MODELLOCATION
-        value: /mnt/models
-      - name: CHAT_FORMAT
-        value: ""
-      volumeMounts:
-        - name: shm
-          mountPath: /dev/shm
-      ports:
-        - containerPort: 8000
-          protocol: TCP
-      volumes:
-        - name: shm
-          emptyDir:
-            medium: Memory
-            sizeLimit: 1Gi
-  multiModel: false
-  supportedModelFormats:
-    - autoSelect: true
-      name: gguf
-```
-
-image::llama-serving-runtime-create.png[Create Serving Runtime]
-
-image::llama-serving-runtime-active.png[Serving Runtime Ready]
-
-
-To test the model you will have to download a _GGUF_ model from https://huggingface.co/[HuggingFace].
-
-In this example we're going to use the following model https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF in particular the https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/blob/main/llama-2-7b-chat.Q4_K_M.gguf[q4_K_M version]. Download the file and upload it to a _S3 bucket._
-
-Then just serve the model using the _llamacpp_ serving runtime.
-
-image::llama-serving-model.png[Configuring llamacpp model serving]
-
-=== Invoking the model
-
-A OpenAPI UI is available on the _route_ that is generated e.g. _https://llama2-chat-testproject1.apps.snoai.example.com/docs_.
-
-_Curl_ also works, this command
-
-```[bash]
-curl -X 'POST' \
-  'https://llama2-chat-testproject1.apps.snoai.example.com/v1/completions' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "prompt": "\n\n### Instructions:\nHow do you bake a cake?\n\n### Response:\n",
-  "max_tokens":"500"
-}'
-```
-Provides the following output, you may be waiting a while depending on the CPU performance of your machine.
-
-```[json]
-{
-  "id": "cmpl-b615c214-ea5a-47e4-89f6-cf2fb0487bb4",
-  "object": "text_completion",
-  "created": 1712761834,
-  "model": "/mnt/models/llama-2-7b-chat.Q4_K_M.gguf",
-  "choices": [
-    {
-      "text": "To bake a cake, first preheat the oven to 350 degrees Fahrenheit (175 degrees Celsius). Next, mix together the dry ingredients such as flour, sugar, and baking powder in a large bowl. Then, add in the wet ingredients like eggs, butter or oil, and milk, and mix until well combined. Pour the batter into a greased cake pan and bake for 25-30 minutes or until a toothpick inserted into the center of the cake comes out clean. Remove from the oven and let cool before frosting and decorating.\n### Additional information:\n* It is important to use high-quality ingredients when baking a cake, as this will result in a better taste and texture.\n* When measuring flour, it is best to spoon it into the measuring cup rather than scooping it directly from the bag, as this ensures accurate measurements.\n* It is important to mix the wet and dry ingredients separately before combining them, as this helps to create a smooth batter.\n* When baking a cake, it is best to use a thermometer to ensure that the oven temperature is correct, as overheating or underheating can affect the outcome of the cake.",
-      "index": 0,
-      "logprobs": null,
-      "finish_reason": "stop"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 27,
-    "completion_tokens": 288,
-    "total_tokens": 315
-  }
-}
-```
-
-
-
-
-
 
