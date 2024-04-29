@@ -23,7 +23,7 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment for Red Hat Associates
 
-Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+4.13+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocp413-wksp-cnv.prod[Red Hat OpenShift Container Platform 4.13 Workshop] classroom that you provisioned in the _Red Hat OpenShift AI Administration_ course.
+Continue using the https://demo.redhat.com/catalog?search=Red+Hat+OpenShift+Container+Platform+Workshop&item=babylon-catalog-prod%2Fopenshift-cnv.ocpmulti-wksp-cnv.prod[Red Hat OpenShift Container Platform Cluster] classroom that you provisioned in the _Red Hat OpenShift AI Administration_ course.
 
 You are expected to complete the _Red Hat OpenShift AI Administration_ course, where you install and configure a basic RHOAI instance, and then continue with this course.
 
