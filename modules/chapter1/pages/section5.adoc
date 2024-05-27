@@ -1,0 +1,91 @@
+= Text Generation Inference Server (TGIS)
+
+The TGIS implementation in RHOAI is a fork of the HuggingFace TGIS repository. 
+
+More details around the reasons for the fork are available in the https://github.com/opendatahub-io/text-generation-inference[TGIS Repo].
+
+On RHOAI TGIS is used as
+
+* The serving runtime for models using the CAIKIT framework.
+* A standalone KServe runtime.
+
+We're only going to focus on the TGIS-KServe usecase here.
+
+== TGIS Overview
+TGIS is a model serving runtime written in Rust which serves _PyTorch_ models via a _gRPC_ interface. It only supports the _SafeTensors_ model format.
+It supports batching of requests as well as streaming responses for individual requests. 
+The gRPC interface definitions are available https://github.com/opendatahub-io/text-generation-inference/tree/main/proto[here] 
+
+[NOTE]
+****
+TGIS currently doesn't have an embeddings API so embeddings have to be generated externally. 
+
+For example this could be an call to an external _Bert_ model or by using a framework such as https://www.sbert.net/[Sentence Transformers] in your code.
+
+****
+
+== Serving a LLM via TGIS & KServe
+
+In this example we're going to serve a https://huggingface.co/google-t5/t5-small[google-t5/t5-small] model.
+
+* To use TGIS runtime is installed by default but ensure that it's enabled by going to _Settings->Serving Runtimes_ in the RHOAI user interface and enabling it.
+
+image::tgis-enabled.png[TGIS Enabled]
+
+* Download the _google-t5/t5-small_ from HuggingFace by following the _HuggingFace_ commands on cloning models.
+
+image::hgf-clone.png[Clone model]
+
+* Upload the Model directory to S3
+
+image::t5-flan-upload.png[Model uploaded to S3] 
+
+* Configure the model runtime and resource limits.
+
+image::t5-config.png[Model serving resources]
+
+* Await the model to be deployed
+
+image::t5-deployed.jpg[Model Ready]
+
+=== Using the model
+
+The model is served using the gRPC protocol and to test we need to fullfill a number of prerequisites
+
+* Download and install https://github.com/fullstorydev/grpcurl[gRPCurl] 
+
+* Create a _proto_ directory on your laptop and download the TGIS ProtoBuf defintions from https://github.com/opendatahub-io/text-generation-inference/tree/main/proto[Here] into the _proto_ directory.
+
+
+* Execute the following command to call the model
+```[bash]
+grpcurl -proto proto/generation.proto -d '{"requests": [{"text": "generate a superhero name?"}]}' -H 'mm-model-id: flan-t5-small' -insecure t51-testproject1.apps...:443 fmaas.GenerationService/Generate
+```
+```[json]
+{
+  "responses": [
+    {
+      "generatedTokenCount": 6,
+      "text": "samurai",
+      "inputTokenCount": 7,
+      "stopReason": "EOS_TOKEN"
+    }
+  ]
+}
+```
+
+* Execute the following command to find out details of the model being served
+```[bash]
+grpcurl -proto proto/generation.proto -d '{"model_id": "flan-t5-small" }' -H 'mm-model-id: flan-t5-small' -insecure t51-testproject1.apps.....:443 fmaas.GenerationService/ModelInfo
+```
+```[json]
+{
+  "modelKind": "ENCODER_DECODER",
+  "maxSequenceLength": 512,
+  "maxNewTokens": 511
+}
+```
+
+[NOTE]
+For an python based example look https://github.com/cfchase/basic-tgis[here]
+
