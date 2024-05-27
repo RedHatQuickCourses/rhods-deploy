@@ -4,7 +4,7 @@ A model-serving runtime provides integration with a specified model server and t
 
 As an administrator, you can use the OpenShift AI interface to add and enable custom model-serving runtimes. You can then choose from your enabled runtimes when you create a new model server.
 
-== Prerequisite
+== Prerequisites
 
 In order to run this exercise, be sure to have handy the model we created in the previous section, that is:
 

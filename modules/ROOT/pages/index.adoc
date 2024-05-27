@@ -36,7 +36,7 @@ You are expected to complete the _Red Hat OpenShift AI Administration_ course, w
 == Prerequisites
 
 * Take the Introduction to https://www.redhat.com/en/services/training/ad141-red-hat-training-presents-introduction-to-python-programming[Python Programming (AD141)] training course or demonstrate equivalent knowledge of Python programming
-* Basic knowledge of machine learning foundations is recommended.
+* Basic knowledge of machine learning foundations is recommended
 * Basics of creating and consuming REST APIs programmatically 
 * Basic knowledge of the Python libraries for machine learning and deep learning
 * Experience with OpenShift is recommended, but not mandatory (in case students have to do troubleshooting)

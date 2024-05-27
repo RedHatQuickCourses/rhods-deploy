@@ -243,7 +243,7 @@ Deploying a **Model Server** triggers a **ReplicaSet** with **ModelMesh**, which
 
 == Test The Model
 
-Now that the model is ready to use, we can make an inference using the REST API
+Now that the model is ready to use, we can make an inference using the REST API.
 
 . Assign the route to an environment variable in your local machine, so that we can use it in our curl commands.
 +
